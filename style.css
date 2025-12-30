@@ -1,28 +1,132 @@
+:root {
+  --bg: #f8f6f3;
+  --text: #2b2b2b;
+  --accent: #8a5cf6;
+  --card: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background: #faf7f5;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+h1, h2 {
+  font-family: 'Playfair Display', serif;
+}
+
+.hero {
+  padding: 80px 20px;
   text-align: center;
-  padding: 40px;
 }
 
-h1 {
-  color: #7a4a9e;
+.hero h1 {
+  font-size: 52px;
 }
 
-select, button {
-  margin: 10px;
-  padding: 10px;
-  font-size: 16px;
+.hero span {
+  color: var(--accent);
 }
 
-button {
-  background: #7a4a9e;
+.hero p {
+  max-width: 500px;
+  margin: 20px auto 0;
+  opacity: 0.8;
+}
+
+.quiz {
+  background: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.quiz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 800px;
+  margin: 30px auto;
+}
+
+.quiz-item {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+select {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.primary-btn {
+  padding: 14px 30px;
+  background: var(--accent);
   color: white;
   border: none;
+  border-radius: 30px;
+  font-size: 16px;
   cursor: pointer;
+  margin-top: 20px;
 }
 
-#result {
+.result-box {
   margin-top: 30px;
   font-size: 18px;
 }
+
+.library {
+  padding: 80px 20px;
+}
+
+.subtitle {
+  opacity: 0.6;
+}
+
+#perfume-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.perfume-card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.perfume-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+}
+
+.perfume-card img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.tag {
+  display: inline-block;
+  background: #eee;
+  padding: 6px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin: 4px 4px 0 0;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  font-size: 14px;
+  opacity: 0.6;
+}
+
