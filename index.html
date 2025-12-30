@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scent Palette - Ultimate Fragrance Journey</title>
+    <title>Scent Palette - Ultimate Speed Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         /* --- TEMEL AYARLAR --- */
@@ -11,7 +11,6 @@
             --primary: #fff;
             --dark-bg: #050505;
             --accent: #d4af37;
-            --glass-light: rgba(255, 255, 255, 0.95);
             --glass-dark: rgba(20, 20, 20, 0.85);
             --blur: blur(20px);
         }
@@ -25,49 +24,51 @@
             color: var(--primary);
         }
 
-        /* --- YENİ GLOBAL ANİMASYONLAR --- */
+        /* --- GLOBAL ANİMASYON --- */
         @keyframes floating {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-15px); }
             100% { transform: translateY(0px); }
         }
 
-        /* --- DEVASA ARKA PLAN (SADECE ŞİŞELER) --- */
+        /* --- DEVASA ARKA PLAN (100 KARE İÇİN) --- */
         .bg-container {
             position: fixed;
             top: 50%; left: 50%;
-            transform: translate(-50%, -50%) rotate(-15deg);
-            width: 300vmax; /* Daha da büyüttük */
-            height: 300vmax;
+            transform: translate(-50%, -50%) rotate(-10deg);
+            width: 250vw;
+            height: 250vh;
             z-index: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 15px; /* Daha sıkışık, daha dolu */
+            gap: 15px; /* Satırlar arası boşluk */
             pointer-events: none;
-            opacity: 0.3; /* Resimler çok olduğu için biraz kıstık */
+            opacity: 0.25; /* Göz yormaması için */
         }
 
         .marquee-row {
-            display: flex; width: 100%; justify-content: center; gap: 15px;
+            display: flex;
+            width: 100%;
+            gap: 15px;
+            flex-shrink: 0;
         }
 
-        .marquee-row.left { animation: scrollLeft 120s linear infinite; }
-        .marquee-row.right { animation: scrollRight 140s linear infinite; }
+        /* HIZLANDIRILMIŞ ANİMASYONLAR (Çok daha hızlı!) */
+        .marquee-row.left { animation: scrollLeft 40s linear infinite; } /* Eskiden 120s idi */
+        .marquee-row.right { animation: scrollRight 45s linear infinite; } /* Eskiden 140s idi */
 
         .m-img {
-            width: 250px; height: 250px; /* Biraz daha küçük ama çok sayıda */
+            width: 200px; height: 200px; /* 100 tane sığsın diye boyut ideal */
             background-size: cover; background-position: center;
             border-radius: 12px; flex-shrink: 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            filter: brightness(0.85) contrast(1.1);
-            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            filter: brightness(0.9) contrast(1.1);
+            transition: transform 0.2s;
         }
-        /* Arka planın da hafif hareket etmesi için */
-        .m-img:hover { transform: scale(1.05); z-index: 2; }
-
-        @keyframes scrollLeft { 0% { transform: translateX(-30%); } 100% { transform: translateX(30%); } }
-        @keyframes scrollRight { 0% { transform: translateX(30%); } 100% { transform: translateX(-30%); } }
+        
+        @keyframes scrollLeft { 0% { transform: translateX(-20%); } 100% { transform: translateX(20%); } }
+        @keyframes scrollRight { 0% { transform: translateX(20%); } 100% { transform: translateX(-20%); } }
 
         /* --- NAVİGASYON --- */
         nav {
@@ -96,56 +97,36 @@
             text-align: center; box-shadow: 0 50px 100px rgba(0,0,0,0.8);
             max-width: 900px; width: 90%; display: flex; flex-direction: column;
             align-items: center; position: relative;
-            /* Süzülme Animasyonu Eklendi */
             animation: floating 6s ease-in-out infinite;
         }
 
-        /* --- YENİ GÜÇLÜ 3D SIVI ANİMASYONU --- */
+        /* --- 3D SIVI ŞİŞESİ --- */
         .bottle-char-container {
             position: relative; width: 110px; height: 150px; margin-bottom: 25px;
             transform-style: preserve-3d; perspective: 800px;
         }
-
         .bottle-char { width: 100%; height: 100%; position: relative; transition: transform 0.1s ease-out; }
-        
         .b-cap {
             width: 45px; height: 35px; margin: 0 auto; border-radius: 8px 8px 0 0;
             background: linear-gradient(45deg, #FFD700, #FDB931, #FFD700);
             box-shadow: inset -2px -2px 8px rgba(0,0,0,0.3), 0 5px 10px rgba(0,0,0,0.1);
         }
-
         .b-body {
             width: 110px; height: 115px;
             background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,240,255,0.8) 100%);
             border-radius: 25px;
-            box-shadow: 
-                inset 0 0 15px rgba(255,255,255,1), /* İç parlama */
-                inset -5px -5px 10px rgba(0,0,0,0.05), /* İç gölge */
-                0 15px 30px rgba(0,0,0,0.2); /* Dış gölge */
+            box-shadow: inset 0 0 15px rgba(255,255,255,1), inset -5px -5px 10px rgba(0,0,0,0.05), 0 15px 30px rgba(0,0,0,0.2);
             position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden;
             border: 3px solid rgba(255,255,255,0.8);
         }
-
-        /* Yeni Çok Katmanlı Sıvı */
-        .b-liquid-container {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 55%;
-            border-radius: 0 0 22px 22px; overflow: hidden;
-        }
-        
+        .b-liquid-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 55%; border-radius: 0 0 22px 22px; overflow: hidden; }
         .liquid-layer {
             position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: rgba(255, 182, 193, 0.5); /* Pembe ton */
-            border-radius: 40%;
-            animation: liquidRotate 6s linear infinite;
+            background: rgba(255, 182, 193, 0.5); border-radius: 40%;
+            animation: liquidRotate 3s linear infinite; /* Sıvı da hızlandı */
         }
-        .liquid-layer:nth-child(2) {
-            background: rgba(255, 105, 180, 0.3); /* Daha koyu pembe */
-            animation-duration: 8s;
-            animation-direction: reverse;
-            border-radius: 45%;
-        }
+        .liquid-layer:nth-child(2) { background: rgba(255, 105, 180, 0.3); animation-duration: 4s; animation-direction: reverse; border-radius: 45%; }
         @keyframes liquidRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
 
         .b-face { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .eyes-row { display: flex; gap: 14px; }
@@ -153,7 +134,6 @@
         .b-pupil { width: 6px; height: 6px; background: #fff; border-radius: 50%; position: absolute; top: 4px; left: 4px; }
         .b-mouth { width: 18px; height: 8px; border-bottom: 3px solid #111; border-radius: 0 0 18px 18px; }
 
-        /* Hero Text & UI */
         .hero-title {
             font-family: 'Syne', sans-serif; font-size: 5.5rem; font-weight: 900;
             color: #1a1a1a; margin: 0 0 20px 0; letter-spacing: -2px; text-transform: uppercase;
@@ -162,10 +142,9 @@
             background: #f5f5f5; padding: 15px 30px; border-radius: 50px;
             border: 1px solid #ddd; width: 100%; max-width: 500px;
             display: flex; align-items: center; gap: 15px; margin-bottom: 30px;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s;
         }
-        .search-platform:hover { transform: scale(1.02); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-
+        .search-platform:hover { transform: scale(1.02); }
         .search-icon { font-size: 20px; color: #999; }
         .typing-container {
             font-family: 'Inter', sans-serif; font-size: 16px; color: #555;
@@ -178,11 +157,11 @@
         .cta-btn {
             background: #1a1a1a; color: #fff; padding: 18px 50px; border-radius: 40px;
             font-family: 'Syne', sans-serif; font-weight: 700; text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Daha canlı geçiş */
+            transition: all 0.2s;
         }
-        .cta-btn:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 30px rgba(0,0,0,0.4); background: var(--accent); color: #000; }
+        .cta-btn:hover { transform: translateY(-5px) scale(1.05); background: var(--accent); color: #000; }
 
-        /* --- QUIZ BÖLÜMÜ --- */
+        /* --- QUIZ --- */
         .quiz-section {
             background: transparent; min-height: 100vh; padding: 100px 20px;
             position: relative; z-index: 20; display: flex; justify-content: center;
@@ -195,16 +174,16 @@
         }
         .question-card { display: none; animation: fadeUp 0.6s ease; }
         .question-card.active { display: block; }
-        .q-text { font-family: 'Syne', sans-serif; font-size: 32px; margin-bottom: 40px; font-weight: 700; color: #fff; line-height: 1.3; }
+        .q-text { font-family: 'Syne', sans-serif; font-size: 32px; margin-bottom: 40px; font-weight: 700; color: #fff; }
         .opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
         .opt-btn {
             padding: 25px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
             color: #ddd; border-radius: 20px; text-align: left; font-size: 16px; cursor: pointer;
-            transition: 0.3s; font-weight: 500;
+            transition: 0.2s; font-weight: 500;
         }
-        .opt-btn:hover { border-color: var(--accent); background: var(--accent); color: #000; transform: translateY(-5px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
+        .opt-btn:hover { border-color: var(--accent); background: var(--accent); color: #000; transform: translateY(-3px); }
 
-        /* SONUÇ ALANI */
+        /* SONUÇ */
         #result-area {
             display: none; background: rgba(0,0,0,0.6); border-radius: 30px; overflow: hidden;
             border: 1px solid rgba(255,255,255,0.1); flex-direction: row; text-align: left; margin-top: 50px;
@@ -219,15 +198,12 @@
         .res-desc { color: #aaa; line-height: 1.6; margin-bottom: 30px; font-size: 17px; }
 
         @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         @media(max-width: 768px) {
             .hero-title { font-size: 3rem; }
             #result-area { flex-direction: column; }
-            .glass-panel { padding: 40px 20px; width: 85%; }
-            .quiz-wrapper { padding: 30px 20px; }
-            .bg-container { width: 400vmax; height: 400vmax; } /* Mobilde daha da büyük */
-            .m-img { width: 150px; height: 150px; }
+            .bg-container { width: 400vw; }
+            .m-img { width: 120px; height: 120px; }
         }
     </style>
 </head>
@@ -240,108 +216,11 @@
         <a href="#">Contact</a>
     </nav>
 
-    <div class="bg-container">
-        <div class="marquee-row left">
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.44894.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.253.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.43235.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.1068.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.5739.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.1226.jpg');"></div>
+    <div class="bg-container" id="bg-container">
         </div>
-        <div class="marquee-row right">
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.1018.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.219.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.707.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.611.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.56586.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.18240.jpg');"></div>
-        </div>
-         <div class="marquee-row left">
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.25324.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.4322.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.20542.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1585232351009-31336c9329ef?w=400');"></div>
-        </div>
-        <div class="marquee-row right">
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1616092042654-20b171638210?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1605618739178-54b033d59e35?w=400');"></div>
-        </div>
-         <div class="marquee-row left">
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.44894.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.43235.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.5739.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1523293188086-b469da3e0681?w=400');"></div>
-        </div>
-        <div class="marquee-row right">
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.1018.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.219.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.707.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1557827983-012eb6ea8dc1?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.56586.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.18240.jpg');"></div>
-        </div>
-        <div class="marquee-row left">
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.25324.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.20542.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1585232351009-31336c9329ef?w=400');"></div>
-        </div>
-         <div class="marquee-row right">
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1616092042654-20b171638210?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=400');"></div>
-        </div>
-         <div class="marquee-row left">
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1557827983-012eb6ea8dc1?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1523293188086-b469da3e0681?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1605618739178-54b033d59e35?w=400');"></div>
-        </div>
-        <div class="marquee-row right">
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1605618739178-54b033d59e35?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=400');"></div>
-        </div>
-        <div class="marquee-row left">
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.44894.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.253.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.43235.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.1068.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.5739.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.1226.jpg');"></div>
-        </div>
-        <div class="marquee-row right">
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.1018.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.219.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.707.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.611.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.56586.jpg');"></div>
-            <div class="m-img" style="background-image: url('https://fimgs.net/mdimg/perfume/375x500.18240.jpg');"></div>
-        </div>
-    </div>
 
     <div id="welcome" class="hero-section">
         <div class="glass-panel">
-            
             <div class="bottle-char-container">
                 <div class="bottle-char">
                     <div class="b-cap"></div>
@@ -360,254 +239,193 @@
                     </div>
                 </div>
             </div>
-
             <h1 class="hero-title">WELCOME</h1>
-            
             <div class="search-platform">
                 <span class="search-icon">🔍</span>
                 <div class="typing-container">Kokunuz imzanızdır... Peki ya sizin imzanız ne?</div>
             </div>
-
             <a href="#quiz" class="cta-btn">TESTİ BAŞLAT</a>
         </div>
     </div>
 
     <div id="quiz" class="quiz-section">
-        <div class="quiz-wrapper">
+        <div class="quiz-wrapper" id="quiz-wrapper-content">
+            <div class="question-card active" id="loading-start">
+                <h2>Yükleniyor...</h2>
+            </div>
             
-            <div class="question-card active" id="q1">
-                <h2 class="q-text">1. Hangi ortamda kendini "evinde" hissedersin?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q1', 'q2')">🌺 Renkli çiçek bahçelerinde</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q1', 'q2')">☀️ Güneşli ve kalabalık bir plajda</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q1', 'q2')">🕯️ Loş, eski bir kütüphanede</button>
-                    <button class="opt-btn" onclick="nextQ('sik', 'q1', 'q2')">🏙️ Şehrin tepesinde lüks bir plaza katında</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q2">
-                <h2 class="q-text">2. Arkadaşların seni nasıl tanımlar?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q2', 'q3')">🕊️ Sakin, düzenli ve güvenilir</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q2', 'q3')">🎉 Grubun enerji kaynağı, çılgın</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q2', 'q3')">🗝️ Derin, sessiz ve gözlemci</button>
-                    <button class="opt-btn" onclick="nextQ('gurme', 'q2', 'q3')">🍰 Tatlı, sıcakkanlı ve sarıp sarmalayan</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q3">
-                <h2 class="q-text">3. Favori aksesuarın nedir?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('sik', 'q3', 'q4')">⌚ Şık bir saat veya minimalist altın kolye</button>
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q3', 'q4')">🧣 İpek bir fular veya inci küpeler</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q3', 'q4')">🕶️ Siyah güneş gözlüğü veya deri eldiven</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q3', 'q4')">👟 Renkli sneakerlar veya spor şapka</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q4">
-                <h2 class="q-text">4. Akşam yemeği için tercihin?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('gurme', 'q4', 'q5')">🍝 Bol soslu makarna ve Tiramisu</button>
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q4', 'q5')">🥗 Taze yeşilliklerle hazırlanmış hafif salata</button>
-                    <button class="opt-btn" onclick="nextQ('sik', 'q4', 'q5')">🥩 Şık bir restoranda şefin tadım menüsü</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q4', 'q5')">🍷 Kırmızı şarap ve zengin peynir tabağı</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q5">
-                <h2 class="q-text">5. Hangi renk paleti sana daha yakın?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q5', 'q6')">🌸 Pastel Pembe, Lila ve Krem</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q5', 'q6')">🍊 Canlı Turuncu, Neon Sarı ve Mavi</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q5', 'q6')">🖤 Gece Mavisi, Siyah ve Bordo</button>
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q5', 'q6')">⚪ Bembeyaz, Gök Mavisi ve Mint</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q6">
-                <h2 class="q-text">6. Sabah rutinin nasıldır?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q6', 'q7')">🏃‍♀️ Erken kalkıp koşuya çıkarım</button>
-                    <button class="opt-btn" onclick="nextQ('gurme', 'q6', 'q7')">☕ Uzun uzun kahve keyfi yaparım</button>
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q6', 'q7')">🚿 Ferahlatıcı bir duş alıp hazırlanırım</button>
-                    <button class="opt-btn" onclick="nextQ('sik', 'q6', 'q7')">📅 Günümü planlar, maillerime bakarım</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q7">
-                <h2 class="q-text">7. İdeal bir film akşamı sence nasıldır?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q7', 'q8')">🎬 Mendilleri hazırlayıp bir aşk filmi izlemek</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q7', 'q8')">🕵️‍♂️ Sonu tahmin edilemeyen bir psikolojik gerilim</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q7', 'q8')">😂 Gülmekten karnımın ağrıdığı bir komedi</button>
-                    <button class="opt-btn" onclick="nextQ('sik', 'q7', 'q8')">🏆 Ödüllü bir sanat filmi veya biyografi</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q8">
-                <h2 class="q-text">8. Parfümünden en temel beklentin ne?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q8', 'q9')">❤️ Beni çekici ve unutulmaz kılsın</button>
-                    <button class="opt-btn" onclick="nextQ('sik', 'q8', 'q9')">👑 Girdiğim ortamda gücümü hissettirsin</button>
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q8', 'q9')">🛁 Bana temizlik, ferahlık ve huzur versin</button>
-                    <button class="opt-btn" onclick="nextQ('gurme', 'q8', 'q9')">🍪 İnsanlarda bana sarılma isteği uyandırsın</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q9">
-                <h2 class="q-text">9. Hangi koku seni geçmişe götürür?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('gurme', 'q9', 'q10')">🍪 Fırından yeni çıkmış kurabiye kokusu</button>
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q9', 'q10')">🧼 Sabun ve yeni yıkanmış çamaşır kokusu</button>
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q9', 'q10')">🌹 Bahçedeki güllerin kokusu</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q9', 'q10')">🪵 Eski ahşap mobilya ve tütsü kokusu</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q10">
-                <h2 class="q-text">10. Mükemmel randevu gecesi sence nasıl olmalı?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('sik', 'q10', 'q11')">🥂 Şık bir restoranda mum ışığında yemek</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q10', 'q11')">🎢 Lunaparka gidip eğlenmek</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q10', 'q11')">🌌 Şehri tepeden izleyen sessiz bir yer</button>
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q10', 'q11')">🎻 Klasik müzik konseri veya bale</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q11">
-                <h2 class="q-text">11. Hangi spor sana daha uygun?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q11', 'q12')">🧘‍♀️ Yoga veya Pilates</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q11', 'q12')">🥊 Boks veya CrossFit</button>
-                    <button class="opt-btn" onclick="nextQ('sik', 'q11', 'q12')">🎾 Tenis veya Golf</button>
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q11', 'q12')">🩰 Dans veya Bale</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q12">
-                <h2 class="q-text">12. Ev dekorasyon tarzın nasıl?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q12', 'q13')">⚪ Minimalist, beyaz ve ferah</button>
-                    <button class="opt-btn" onclick="nextQ('sik', 'q12', 'q13')">🏛️ Modern, mermer ve metal detaylı</button>
-                    <button class="opt-btn" onclick="nextQ('gurme', 'q12', 'q13')">🧸 Sıcak, yumuşak battaniyelerle dolu</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q12', 'q13')">🌑 Koyu renk duvarlar ve antika eşyalar</button>
-                </div>
-            </div>
-
-             <div class="question-card" id="q13">
-                <h2 class="q-text">13. En sevdiğin çiçek türü?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q13', 'q14')">🌹 Klasik Kırmızı Gül</button>
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q13', 'q14')">🪷 Beyaz Zambak veya Lotus</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q13', 'q14')">🪴 Siyah Orkide</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q13', 'q14')">🌻 Ayçiçeği veya Papatya</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q14">
-                <h2 class="q-text">14. Hangi müzik tarzı ruhunu yansıtır?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q14', 'q15')">🎵 Pop / Dans Müziği</button>
-                    <button class="opt-btn" onclick="nextQ('sik', 'q14', 'q15')">🎻 Klasik Müzik / Caz</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q14', 'q15')">🎸 Rock / Alternatif</button>
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q14', 'q15')">🎹 Akustik / Slow Parçalar</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q15">
-                <h2 class="q-text">15. Hayalindeki meslek ortamı?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('sik', 'q15', 'q16')">💼 Lüks bir ofiste yönetici olmak</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q15', 'q16')">🎤 Sahnede veya kamera önünde olmak</button>
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q15', 'q16')">🩺 Laboratuvarda veya hastanede çalışmak</button>
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q15', 'q16')">🎨 Kendi sanat atölyemde üretmek</button>
-                </div>
-            </div>
-
-             <div class="question-card" id="q16">
-                <h2 class="q-text">16. Moralim bozuk olduğunda...</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('gurme', 'q16', 'q17')">🍫 Çikolata yerim, tatlıya düşerim</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q16', 'q17')">🎧 Yüksek sesle müzik açıp dans ederim</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q16', 'q17')">🌑 Odama kapanıp düşüncelere dalarım</button>
-                    <button class="opt-btn" onclick="nextQ('sik', 'q16', 'q17')">🛍️ Alışverişe çıkar kendimi şımartırım</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q17">
-                <h2 class="q-text">17. Duş alırken nasıl ürünler seversin?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q17', 'q18')">🧼 Sabun kokulu, ferahlatıcı jeller</button>
-                    <button class="opt-btn" onclick="nextQ('gurme', 'q17', 'q18')">🥥 Vanilyalı, hindistan cevizli yoğun kremler</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q17', 'q18')">🍋 Narenciye özlü, canlandırıcı peelingler</button>
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q17', 'q18')">🌹 Gül yapraklı banyo köpükleri</button>
-                </div>
-            </div>
-
-             <div class="question-card" id="q18">
-                <h2 class="q-text">18. Takı seçiminde tercihin?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('sik', 'q18', 'q19')">🟡 Altın (Gold)</button>
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q18', 'q19')">⚪ Gümüş (Silver)</button>
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q18', 'q19')">🟠 Rose Gold</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q18', 'q19')">⚫ Koyu metaller veya doğal taşlar</button>
-                </div>
-            </div>
-
-             <div class="question-card" id="q19">
-                <h2 class="q-text">19. Gece geç saatte ne yaparsın?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q19', 'q20')">📜 Gizemli hikayeler okurum veya izlerim</button>
-                    <button class="opt-btn" onclick="nextQ('gurme', 'q19', 'q20')">🍪 Gece atıştırmalığı hazırlarım</button>
-                    <button class="opt-btn" onclick="nextQ('sik', 'q19', 'q20')">📅 Yarının planını yapar, cilt bakımı yaparım</button>
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q19', 'q20')">😴 Çoktan uyumuş olurum</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="q20">
-                <h2 class="q-text">20. Son olarak, parfüm sıktığında nasıl hissetmek istersin?</h2>
-                <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('sik', 'q20', 'calc')">💎 Kendimden emin ve lüks</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q20', 'calc')">💥 Canlı ve harekete hazır</button>
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q20', 'calc')">🥰 Sevgi dolu ve zarif</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q20', 'calc')">🤫 Ulaşılmaz ve merak uyandıran</button>
-                </div>
-            </div>
-
-            <div class="question-card" id="loading">
-                <h2 class="q-text">Yapay Zeka Analiz Ediyor...</h2>
-                <div style="font-size:50px; animation:spin 1s infinite">✨</div>
-                <p style="margin-top:20px; color:#aaa;">20 yanıtın işleniyor...</p>
-            </div>
-
             <div id="result-area">
-                <div class="res-img">
-                    <img id="r-img" src="" alt="Parfüm">
-                </div>
+                <div class="res-img"><img id="r-img" src="" alt="Parfüm"></div>
                 <div class="res-info">
                     <span class="res-brand" id="r-brand">MARKA</span>
                     <h1 class="res-name" id="r-name">Parfüm Adı</h1>
                     <p class="res-desc" id="r-desc">Açıklama</p>
-                    
-                    <strong style="display:block; margin-bottom:5px; color:#fff; font-size:14px;">ÜST NOTALAR</strong>
-                    <p id="r-top" style="margin-bottom:20px; color:#ccc;">...</p>
-
-                    <strong style="display:block; margin-bottom:5px; color:#fff; font-size:14px;">DİP NOTALAR</strong>
+                    <strong style="display:block;margin-bottom:5px;color:#fff;font-size:14px;">ÜST NOTALAR</strong>
+                    <p id="r-top" style="margin-bottom:20px;color:#ccc;">...</p>
+                    <strong style="display:block;margin-bottom:5px;color:#fff;font-size:14px;">DİP NOTALAR</strong>
                     <p id="r-base" style="color:#ccc;">...</p>
-
-                    <button onclick="location.reload()" class="cta-btn" style="background:#fff; color:#000; margin-top:30px; font-size:14px;">TESTİ TEKRARLA</button>
+                    <button onclick="location.reload()" class="cta-btn" style="background:#fff;color:#000;margin-top:30px;font-size:14px;">TESTİ TEKRARLA</button>
                 </div>
             </div>
-
         </div>
     </div>
 
     <script>
-        // MOUSE TAKİBİ & 3D EFEKT
+        // --- 1. ARKA PLANI DOLDUR (100 KARE) ---
+        const bgContainer = document.getElementById('bg-container');
+        // Sadece şişe fotoğrafları (İnsan yok)
+        const bottleImages = [
+            'https://fimgs.net/mdimg/perfume/375x500.44894.jpg', 'https://fimgs.net/mdimg/perfume/375x500.253.jpg', 
+            'https://fimgs.net/mdimg/perfume/375x500.43235.jpg', 'https://fimgs.net/mdimg/perfume/375x500.1068.jpg', 
+            'https://fimgs.net/mdimg/perfume/375x500.5739.jpg', 'https://fimgs.net/mdimg/perfume/375x500.1226.jpg', 
+            'https://fimgs.net/mdimg/perfume/375x500.1018.jpg', 'https://fimgs.net/mdimg/perfume/375x500.219.jpg', 
+            'https://fimgs.net/mdimg/perfume/375x500.707.jpg', 'https://fimgs.net/mdimg/perfume/375x500.611.jpg', 
+            'https://fimgs.net/mdimg/perfume/375x500.56586.jpg', 'https://fimgs.net/mdimg/perfume/375x500.18240.jpg', 
+            'https://fimgs.net/mdimg/perfume/375x500.25324.jpg', 'https://fimgs.net/mdimg/perfume/375x500.4322.jpg', 
+            'https://fimgs.net/mdimg/perfume/375x500.20542.jpg', 'https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=400',
+            'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=400', 'https://images.unsplash.com/photo-1585232351009-31336c9329ef?w=400',
+            'https://images.unsplash.com/photo-1616092042654-20b171638210?w=400', 'https://images.unsplash.com/photo-1550525811-e5869dd03032?w=400',
+            'https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?w=400', 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400',
+            'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400', 'https://images.unsplash.com/photo-1557827983-012eb6ea8dc1?w=400',
+            'https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=400', 'https://images.unsplash.com/photo-1523293188086-b469da3e0681?w=400',
+            'https://images.unsplash.com/photo-1605618739178-54b033d59e35?w=400'
+        ];
+
+        // 10 Satır, Her satırda 10-15 Resim oluştur
+        for (let i = 0; i < 10; i++) {
+            const row = document.createElement('div');
+            // Satırları zıt yönlere kaydır
+            row.className = `marquee-row ${i % 2 === 0 ? 'left' : 'right'}`;
+            
+            // Her satıra 12 resim koyalım (Toplam 120 kare olur, 100'ü geçer)
+            for (let j = 0; j < 12; j++) {
+                const imgDiv = document.createElement('div');
+                imgDiv.className = 'm-img';
+                // Rastgele resim seç
+                const randomUrl = bottleImages[Math.floor(Math.random() * bottleImages.length)];
+                imgDiv.style.backgroundImage = `url('${randomUrl}')`;
+                row.appendChild(imgDiv);
+            }
+            bgContainer.appendChild(row);
+        }
+
+        // --- 2. SORULARI OLUŞTUR (20 ADET) ---
+        const questions = [
+            { t: "1. Kendini en huzurlu hissettiğin yer?", o: [["Renkli çiçek bahçesi", "romantik"], ["Güneşli plaj", "enerjik"], ["Eski kütüphane", "gizemli"], ["Lüks plaza", "sik"]] },
+            { t: "2. Arkadaşların seni nasıl tanımlar?", o: [["Sakin ve güvenilir", "temiz"], ["Enerji kaynağı", "enerjik"], ["Sessiz ve derin", "gizemli"], ["Tatlı ve sıcak", "gurme"]] },
+            { t: "3. Favori aksesuarın?", o: [["Şık saat", "sik"], ["İpek fular", "romantik"], ["Güneş gözlüğü", "gizemli"], ["Renkli ayakkabı", "enerjik"]] },
+            { t: "4. Akşam yemeği tercihin?", o: [["Makarna & Tatlı", "gurme"], ["Salata", "temiz"], ["Şık restoran", "sik"], ["Şarap & Peynir", "gizemli"]] },
+            { t: "5. Renk paletin?", o: [["Pastel tonlar", "romantik"], ["Neon & Canlı", "enerjik"], ["Siyah & Koyu", "gizemli"], ["Beyaz & Mavi", "temiz"]] },
+            { t: "6. Sabah rutinin?", o: [["Koşu", "enerjik"], ["Kahve keyfi", "gurme"], ["Duş", "temiz"], ["Planlama", "sik"]] },
+            { t: "7. Film tercihin?", o: [["Aşk filmi", "romantik"], ["Gerilim", "gizemli"], ["Komedi", "enerjik"], ["Biyografi", "sik"]] },
+            { t: "8. Parfümden beklentin?", o: [["Çekicilik", "romantik"], ["Güç", "sik"], ["Ferahlık", "temiz"], ["Sarılma hissi", "gurme"]] },
+            { t: "9. Seni geçmişe götüren koku?", o: [["Kurabiye", "gurme"], ["Sabun", "temiz"], ["Gül", "romantik"], ["Tütsü", "gizemli"]] },
+            { t: "10. İdeal randevu?", o: [["Restoran", "sik"], ["Lunapark", "enerjik"], ["Manzara", "gizemli"], ["Konser", "romantik"]] },
+            { t: "11. Hangi spor?", o: [["Yoga", "temiz"], ["Boks", "enerjik"], ["Tenis", "sik"], ["Dans", "romantik"]] },
+            { t: "12. Ev dekorasyonun?", o: [["Minimalist", "temiz"], ["Modern", "sik"], ["Sıcak", "gurme"], ["Antika", "gizemli"]] },
+            { t: "13. Sevdiğin çiçek?", o: [["Gül", "romantik"], ["Zambak", "temiz"], ["Orkide", "gizemli"], ["Ayçiçeği", "enerjik"]] },
+            { t: "14. Müzik tarzın?", o: [["Pop", "enerjik"], ["Klasik", "sik"], ["Rock", "gizemli"], ["Slow", "romantik"]] },
+            { t: "15. Hayalindeki meslek?", o: [["Yönetici", "sik"], ["Sanatçı", "enerjik"], ["Doktor", "temiz"], ["Ressam", "romantik"]] },
+            { t: "16. Modun düşükken?", o: [["Çikolata yerim", "gurme"], ["Dans ederim", "enerjik"], ["Düşünürüm", "gizemli"], ["Alışveriş", "sik"]] },
+            { t: "17. Duş jelin?", o: [["Ferah", "temiz"], ["Vanilyalı", "gurme"], ["Narenciye", "enerjik"], ["Güllü", "romantik"]] },
+            { t: "18. Takı tercihin?", o: [["Altın", "sik"], ["Gümüş", "temiz"], ["Rose Gold", "romantik"], ["Doğal Taş", "gizemli"]] },
+            { t: "19. Gece aktiviten?", o: [["Okumak", "gizemli"], ["Atıştırmak", "gurme"], ["Bakım", "sik"], ["Uyumak", "temiz"]] },
+            { t: "20. Nasıl hissetmek istersin?", o: [["Lüks", "sik"], ["Canlı", "enerjik"], ["Zarif", "romantik"], ["Gizemli", "gizemli"]] }
+        ];
+
+        const quizWrapper = document.getElementById('quiz-wrapper-content');
+        const loadingStart = document.getElementById('loading-start');
+        loadingStart.style.display = 'none'; // Başlangıçta gizle
+
+        let currentQIndex = 0;
+        let scores = { romantik:0, enerjik:0, gizemli:0, sik:0, gurme:0, temiz:0 };
+
+        // Soruları HTML'e bas
+        questions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q${index}`;
+            if (index === 0) card.classList.add('active'); // İlk soru aktif
+
+            const title = document.createElement('h2');
+            title.className = 'q-text';
+            title.innerText = q.t;
+            card.appendChild(title);
+
+            const optsDiv = document.createElement('div');
+            optsDiv.className = 'opts';
+            
+            q.o.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn';
+                btn.innerText = opt[0];
+                btn.onclick = () => handleAnswer(opt[1], index);
+                optsDiv.appendChild(btn);
+            });
+            card.appendChild(optsDiv);
+            quizWrapper.insertBefore(card, document.getElementById('result-area'));
+        });
+
+        // Loading Card (En sona ekle)
+        const loadingCard = document.createElement('div');
+        loadingCard.className = 'question-card';
+        loadingCard.id = 'loading-card';
+        loadingCard.innerHTML = `<h2 class="q-text">Analiz Ediliyor...</h2><div style="font-size:50px;animation:spin 1s infinite">✨</div>`;
+        quizWrapper.insertBefore(loadingCard, document.getElementById('result-area'));
+
+        function handleAnswer(category, index) {
+            scores[category]++;
+            const currentCard = document.getElementById(`q${index}`);
+            currentCard.style.display = 'none';
+            currentCard.classList.remove('active');
+
+            if (index < questions.length - 1) {
+                const nextCard = document.getElementById(`q${index+1}`);
+                nextCard.style.display = 'block';
+                setTimeout(() => nextCard.classList.add('active'), 10);
+            } else {
+                showResult();
+            }
+        }
+
+        // --- 3. SONUÇ HESAPLA & GÖSTER ---
+        const db = [
+            { cat:'romantik', brand:'GUCCI', name:'Bloom', img:'https://fimgs.net/mdimg/perfume/375x500.44894.jpg', desc:'Yasemin ve sümbülteberin rüya gibi dansı.', top:'Rangoon Sarmaşığı', base:'Sümbülteber' },
+            { cat:'enerjik', brand:'DOLCE & GABBANA', name:'Light Blue', img:'https://fimgs.net/mdimg/perfume/375x500.1068.jpg', desc:'Sicilya limonunun ferahlatıcı enerjisi.', top:'Limon, Elma', base:'Sedir Ağacı' },
+            { cat:'gizemli', brand:'TOM FORD', name:'Black Orchid', img:'https://fimgs.net/mdimg/perfume/375x500.1018.jpg', desc:'Lüks, karanlık ve şehvetli.', top:'Trüf Mantarı', base:'Bitter Çikolata' },
+            { cat:'sik', brand:'CHANEL', name:'Coco Mademoiselle', img:'https://fimgs.net/mdimg/perfume/375x500.611.jpg', desc:'Modern, özgür ve zarif.', top:'Portakal', base:'Paçuli' },
+            { cat:'gurme', brand:'YSL', name:'Black Opium', img:'https://fimgs.net/mdimg/perfume/375x500.25324.jpg', desc:'Kahve ve vanilya bağımlılığı.', top:'Armut', base:'Kahve, Vanilya' },
+            { cat:'temiz', brand:'MAISON MARGIELA', name:'Lazy Sunday Morning', img:'https://fimgs.net/mdimg/perfume/375x500.20542.jpg', desc:'Temiz çarşaf kokusu.', top:'Aldehitler', base:'Misk' }
+        ];
+
+        function showResult() {
+            document.getElementById('loading-card').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('loading-card').style.display = 'none';
+                
+                let winner = Object.keys(scores).reduce((a,b) => scores[a] > scores[b] ? a : b);
+                let pool = db.filter(x => x.cat === winner);
+                if(pool.length === 0) pool = db; // Fallback
+                
+                let p = pool[Math.floor(Math.random() * pool.length)];
+
+                document.getElementById('r-img').src = p.img;
+                document.getElementById('r-brand').innerText = p.brand;
+                document.getElementById('r-name').innerText = p.name;
+                document.getElementById('r-desc').innerText = p.desc;
+                document.getElementById('r-top').innerText = p.top;
+                document.getElementById('r-base').innerText = p.base;
+
+                const resArea = document.getElementById('result-area');
+                resArea.style.display = 'flex';
+                if(window.innerWidth <= 768) resArea.style.flexDirection = 'column';
+                
+            }, 2000);
+        }
+
+        // --- MOUSE & ŞİŞE ANİMASYONU ---
         const pupils = document.querySelectorAll('.b-pupil');
         const bottle = document.querySelector('.bottle-char');
-
         window.addEventListener('mousemove', (e) => {
             pupils.forEach(pupil => {
                 const rect = pupil.getBoundingClientRect();
@@ -617,75 +435,14 @@
                 const dist = Math.min(5, Math.hypot(e.clientX - x, e.clientY - y) / 10);
                 pupil.style.transform = `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`;
             });
-
             if(bottle) {
                 const centerX = window.innerWidth / 2;
                 const centerY = window.innerHeight / 2;
-                const moveX = (e.clientX - centerX) / 40; 
-                const moveY = (e.clientY - centerY) / 40;
+                const moveX = (e.clientX - centerX) / 30;
+                const moveY = (e.clientY - centerY) / 30;
                 bottle.style.transform = `rotateY(${moveX}deg) rotateX(${-moveY}deg)`;
             }
         });
-
-        // PARFÜM VERİLERİ (Kontrol Edildi)
-        const db = [
-            { id:1, cat:'romantik', brand:'GUCCI', name:'Bloom', img:'https://fimgs.net/mdimg/perfume/375x500.44894.jpg', desc:'Yasemin ve sümbülteberin rüya gibi dansı. Tam bir çiçek bahçesi.', top:'Rangoon Sarmaşığı', base:'Sümbülteber' },
-            { id:2, cat:'romantik', brand:'CHLOÉ', name:'Signature', img:'https://fimgs.net/mdimg/perfume/375x500.253.jpg', desc:'Pudralı gül kokusunun en modern ve zarif hali.', top:'Şakayık, Liçi', base:'Amber, Sedir' },
-            { id:3, cat:'romantik', brand:'PARFUMS DE MARLY', name:'Delina', img:'https://fimgs.net/mdimg/perfume/375x500.43235.jpg', desc:'Türk gülü ve ravent ile büyüleyici, prenseslere layık bir koku.', top:'Bergamot, Ravent', base:'Kaşmir Ağacı' },
-            { id:4, cat:'enerjik', brand:'DOLCE & GABBANA', name:'Light Blue', img:'https://fimgs.net/mdimg/perfume/375x500.1068.jpg', desc:'Sicilya limonunun ferahlatıcı enerjisi ve yaz neşesi.', top:'Limon, Elma', base:'Sedir Ağacı' },
-            { id:5, cat:'enerjik', brand:'VERSACE', name:'Versense', img:'https://fimgs.net/mdimg/perfume/375x500.5739.jpg', desc:'Akdeniz doğasının uyanışını simgeleyen, canlı ve yeşil bir koku.', top:'Bergamot, Yeşil Mandalina', base:'Zeytin Ağacı' },
-            { id:6, cat:'enerjik', brand:'MOSCHINO', name:'Funny!', img:'https://fimgs.net/mdimg/perfume/375x500.1226.jpg', desc:'Eğlenceli, kıpır kıpır ve turunçgil dolu bir gençlik iksiri.', top:'Acı Portakal, Frenk Üzümü', base:'Yeşil Çay' },
-            { id:7, cat:'gizemli', brand:'TOM FORD', name:'Black Orchid', img:'https://fimgs.net/mdimg/perfume/375x500.1018.jpg', desc:'Lüks, karanlık ve şehvetli. İddialı karakterlerin imzası.', top:'Trüf Mantarı, Ylang Ylang', base:'Bitter Çikolata, Paçuli' },
-            { id:8, cat:'gizemli', brand:'DIOR', name:'Hypnotic Poison', img:'https://fimgs.net/mdimg/perfume/375x500.219.jpg', desc:'Yasak meyvenin cazibesi. Büyüleyici ve oryantal.', top:'Hindistan Cevizi, Mürdüm Eriği', base:'Vanilya, Badem' },
-            { id:9, cat:'gizemli', brand:'MUGLER', name:'Alien', img:'https://fimgs.net/mdimg/perfume/375x500.707.jpg', desc:'Başka bir dünyadan gelmiş gibi. Güçlü yasemin ve amber patlaması.', top:'Yasemin', base:'Beyaz Amber' },
-            { id:10, cat:'sik', brand:'CHANEL', name:'Coco Mademoiselle', img:'https://fimgs.net/mdimg/perfume/375x500.611.jpg', desc:'Modern, özgür ve zarif kadının ikonik kokusu.', top:'Portakal, Mandalina', base:'Paçuli, Misk' },
-            { id:11, cat:'sik', brand:'YSL', name:'Libre', img:'https://fimgs.net/mdimg/perfume/375x500.56586.jpg', desc:'Özgürlüğün kokusu. Maskülen lavanta ile feminen portakal çiçeğinin dansı.', top:'Lavanta, Mandalina', base:'Vanilya, Ambergris' },
-            { id:12, cat:'sik', brand:'GIORGIO ARMANI', name:'Sì', img:'https://fimgs.net/mdimg/perfume/375x500.18240.jpg', desc:'İtalyan zarafeti. Hem tatlı hem de sofistike.', top:'Frenk Üzümü Nektarı', base:'Sarı Odun, Misk' },
-            { id:13, cat:'gurme', brand:'YSL', name:'Black Opium', img:'https://fimgs.net/mdimg/perfume/375x500.25324.jpg', desc:'Kahve ve vanilyanın tatlı bağımlılığı. Gece için mükemmel.', top:'Armut, Karabiber', base:'Vanilya, Kahve' },
-            { id:14, cat:'gurme', brand:'KILIAN', name:'Love, Don\'t Be Shy', img:'https://fimgs.net/mdimg/perfume/375x500.4322.jpg', desc:'Marshmallow ve portakal çiçeği ile en tatlı günah.', top:'Neroli, Bergamot', base:'Marshmallow, Karamel' },
-            { id:15, cat:'temiz', brand:'MAISON MARGIELA', name:'Lazy Sunday Morning', img:'https://fimgs.net/mdimg/perfume/375x500.20542.jpg', desc:'Pazar sabahı temiz çarşafların verdiği o eşsiz huzur.', top:'Aldehitler, Armut', base:'Beyaz Misk' }
-        ];
-
-        let scores = { romantik:0, enerjik:0, gizemli:0, sik:0, gurme:0, temiz:0 };
-
-        function nextQ(cat, cur, nxt) {
-            if(scores[cat] !== undefined) scores[cat] += 1; // Her soru 1 puan
-            
-            document.getElementById(cur).style.display = 'none';
-            document.getElementById(cur).classList.remove('active');
-
-            if(nxt === 'calc') {
-                calcResult();
-            } else {
-                const n = document.getElementById(nxt);
-                n.style.display = 'block';
-                setTimeout(()=>n.classList.add('active'), 10);
-            }
-        }
-
-        function calcResult() {
-            document.getElementById('loading').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-                
-                let winner = Object.keys(scores).reduce((a,b) => scores[a] > scores[b] ? a : b);
-                let pool = db.filter(x => x.cat === winner);
-                if(pool.length === 0) pool = db.filter(x => x.cat === 'sik');
-                let p = pool[Math.floor(Math.random()*pool.length)];
-
-                document.getElementById('r-img').src = p.img;
-                document.getElementById('r-brand').innerText = p.brand;
-                document.getElementById('r-name').innerText = p.name;
-                document.getElementById('r-desc').innerText = p.desc;
-                document.getElementById('r-top').innerText = p.top;
-                document.getElementById('r-base').innerText = p.base;
-
-                const r = document.getElementById('result-area');
-                r.style.display = 'flex';
-                if(window.innerWidth <= 768) r.style.flexDirection = 'column';
-
-            }, 3000); // 20 soru olduğu için bekleme süresini biraz artırdım
-        }
     </script>
 </body>
 </html>
