@@ -17,3 +17,24 @@ function runAI() {
     resultDiv.innerHTML = "😔 Tam eşleşme yok, benzer kokular öneriyoruz.";
   }
 }
+
+const grid = document.getElementById("perfume-grid");
+
+function renderPerfumes(list) {
+  grid.innerHTML = "";
+  list.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "perfume-card";
+
+    card.innerHTML = `
+      <img src="${p.image}" alt="${p.name}">
+      <h3>${p.name}</h3>
+      <p><i>${p.brand}</i></p>
+      <div>${p.notes.map(n => `<span class="tag">${n}</span>`).join("")}</div>
+    `;
+
+    grid.appendChild(card);
+  });
+}
+
+renderPerfumes(perfumes);
