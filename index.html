@@ -8,10 +8,10 @@
     <style>
         /* --- TEMEL AYARLAR --- */
         :root {
-            --primary: #1a1a1a;
+            --primary: #2d2d2d;
             --accent: #d4af37;
-            --glass: rgba(255, 255, 255, 0.85); /* Biraz daha opak yaptım okunsun diye */
-            --blur: blur(20px);
+            --glass: rgba(255, 255, 255, 0.90); /* Daha net görünüm */
+            --blur: blur(25px);
             --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
         }
 
@@ -19,55 +19,55 @@
             margin: 0;
             padding: 0;
             font-family: 'Inter', sans-serif;
-            background: #eee; /* Resimler yüklenene kadar gri */
+            background: #111; /* Resimler yüklenmezse koyu fon */
             overflow-x: hidden;
             color: var(--primary);
         }
 
-        /* --- ARKA PLAN (TAM EKRAN VE HIZLI) --- */
+        /* --- KUSURSUZ ARKA PLAN (GRID MARQUEE) --- */
         .bg-container {
             position: fixed;
-            top: -25%; /* Ekranın dışına taşır */
-            left: -25%;
-            width: 150vw; /* Ekranın 1.5 katı genişlik */
-            height: 150vh; /* Ekranın 1.5 katı yükseklik */
+            top: -100vh;      /* Ekranın çok üstünden başla */
+            left: -100vw;     /* Ekranın çok solundan başla */
+            width: 300vw;     /* Ekranın 3 katı genişlik */
+            height: 300vh;    /* Ekranın 3 katı yükseklik */
             z-index: 0;
-            transform: rotate(-10deg);
+            transform: rotate(-15deg); /* Açılı duruş */
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            gap: 25px; /* Satırlar arası boşluk */
+            gap: 20px;        /* Satırlar arası boşluk */
             pointer-events: none;
-            opacity: 0.6; /* Görünürlük ayarı */
-            filter: blur(5px); /* Hafif bulanıklık */
+            opacity: 0.8;     /* Canlılık için opaklığı artırdım */
+            filter: brightness(0.9); /* Resimler çok patlamasın */
         }
 
         .marquee-row {
             display: flex;
-            width: 200%; /* Sonsuz döngü için ekstra uzunluk */
-            gap: 25px; /* Resimler arası boşluk */
-            flex-shrink: 0;
+            width: max-content; /* İçerik kadar genişle */
+            gap: 20px;
         }
 
-        /* HIZLANDIRILMIŞ ANİMASYONLAR (20s - 25s) */
-        .marquee-row.left { animation: slideLeft 20s linear infinite; }
-        .marquee-row.right { animation: slideRight 25s linear infinite; }
+        /* Animasyonlar: Sonsuz Döngü */
+        .marquee-row.left { animation: scrollLeft 60s linear infinite; }
+        .marquee-row.right { animation: scrollRight 70s linear infinite; }
 
         .m-img {
-            width: 350px;
-            height: 220px;
+            width: 300px;
+            height: 300px;
             background-size: cover;
             background-position: center;
             border-radius: 20px;
             flex-shrink: 0;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
         }
 
-        @keyframes slideLeft { 
+        /* Kusursuz geçiş için keyframe ayarları */
+        @keyframes scrollLeft { 
             0% { transform: translateX(0); } 
-            100% { transform: translateX(-50%); } 
+            100% { transform: translateX(-50%); } /* Yarısına kadar kaydırıp başa sarar */
         }
-        @keyframes slideRight { 
+        @keyframes scrollRight { 
             0% { transform: translateX(-50%); } 
             100% { transform: translateX(0); } 
         }
@@ -86,25 +86,16 @@
 
         nav a {
             text-decoration: none;
-            color: var(--primary);
+            color: #000; /* Arka plan renkli olduğu için siyah */
             font-family: 'Syne', sans-serif;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 14px;
             letter-spacing: 1px;
             text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
             position: relative;
         }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: var(--accent);
-            transition: 0.3s;
-        }
+        nav a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 3px; background: var(--accent); transition: 0.3s; }
         nav a:hover::after { width: 100%; }
 
         /* --- MERKEZİ ALAN --- */
@@ -122,11 +113,11 @@
             background: var(--glass);
             backdrop-filter: var(--blur);
             -webkit-backdrop-filter: var(--blur);
-            padding: 60px 80px;
-            border-radius: 50px;
+            padding: 50px 70px;
+            border-radius: 60px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.8);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            border: 2px solid rgba(255,255,255,1);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.2);
             max-width: 900px;
             width: 90%;
             display: flex;
@@ -134,68 +125,116 @@
             align-items: center;
         }
 
-        /* İNTERAKTİF YÜZ */
-        .face-container {
-            width: 80px;
-            height: 80px;
-            background: #fff;
-            border-radius: 50%;
-            border: 3px solid var(--primary);
+        /* --- 3D PARFÜM KARAKTERİ (CSS DRAWING) --- */
+        .bottle-char-container {
             position: relative;
+            width: 100px;
+            height: 140px;
             margin-bottom: 20px;
+            transform-style: preserve-3d;
+            perspective: 500px;
+        }
+
+        .bottle-char {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.1s ease-out; /* Mouse takibi için */
+        }
+
+        /* Şişe Kapak */
+        .b-cap {
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(45deg, #d4af37, #f3d467);
+            margin: 0 auto;
+            border-radius: 5px 5px 0 0;
+            box-shadow: inset -2px -2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* Şişe Gövde */
+        .b-body {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(230,230,250,0.8));
+            border-radius: 20px;
+            border: 2px solid rgba(255,255,255,0.8);
+            box-shadow: 
+                0 15px 35px rgba(216, 27, 96, 0.2), /* Renkli gölge */
+                inset 0 0 20px rgba(255,255,255,0.9); /* Cam hissi */
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .eyes-wrapper {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 5px;
-        }
-
-        .eye {
-            width: 20px;
-            height: 20px;
-            background: #fff;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            position: relative;
             overflow: hidden;
         }
 
-        .pupil {
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
+        /* Sıvı Efekti */
+        .b-liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: rgba(255, 192, 203, 0.4);
+            z-index: 0;
+            border-radius: 0 0 18px 18px;
+            animation: wave 4s infinite ease-in-out;
+        }
+
+        /* Yüz */
+        .b-face {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .eyes-row { display: flex; gap: 12px; }
+        
+        .b-eye {
+            width: 18px;
+            height: 22px;
+            background: #333;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .b-pupil {
+            width: 6px;
+            height: 6px;
+            background: #fff;
             border-radius: 50%;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 4px;
+            left: 4px;
         }
 
-        .mouth {
+        .b-mouth {
             width: 20px;
             height: 10px;
-            border-bottom: 3px solid var(--primary);
+            border-bottom: 3px solid #333;
             border-radius: 0 0 20px 20px;
-            position: absolute;
-            bottom: 18px;
         }
 
+        @keyframes wave {
+            0%, 100% { height: 40%; transform: rotate(0deg); }
+            50% { height: 45%; transform: rotate(2deg); }
+        }
+
+        /* --- HERO TEXT --- */
         .hero-title {
             font-family: 'Syne', sans-serif;
-            font-size: 8rem;
+            font-size: 7rem;
             font-weight: 800;
             color: var(--primary);
             line-height: 0.9;
-            margin: 0 0 30px 0;
+            margin: 0 0 20px 0;
             letter-spacing: -3px;
         }
 
-        /* ARAMA ÇUBUĞU */
         .search-platform {
             background: #fff;
             padding: 15px 30px;
@@ -207,11 +246,10 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .search-icon { font-size: 20px; color: #999; }
-
         .typing-container {
             font-family: 'Inter', sans-serif;
             font-size: 16px;
@@ -253,11 +291,11 @@
         .quiz-wrapper { width: 100%; max-width: 1000px; text-align: center; }
         .question-card { display: none; animation: fadeUp 0.6s ease; }
         .question-card.active { display: block; }
-        .q-text { font-family: 'Syne', sans-serif; font-size: 40px; margin-bottom: 50px; font-weight: 700; }
+        .q-text { font-family: 'Syne', sans-serif; font-size: 36px; margin-bottom: 40px; font-weight: 700; color: #333; }
         .opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
         
         .opt-btn {
-            padding: 30px;
+            padding: 25px;
             background: #f9f9f9;
             border: 2px solid #eee;
             border-radius: 20px;
@@ -265,6 +303,7 @@
             font-size: 16px;
             cursor: pointer;
             transition: 0.3s;
+            font-weight: 500;
         }
         .opt-btn:hover { border-color: var(--accent); background: #fffcf5; transform: translateY(-5px); }
 
@@ -278,14 +317,16 @@
             border: 1px solid #eee;
             flex-direction: row;
             text-align: left;
+            margin-top: 50px;
         }
 
         .res-img { flex: 1; background: #f4f4f4; display: flex; align-items: center; justify-content: center; padding: 40px; }
-        .res-img img { max-width: 100%; max-height: 400px; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.1)); }
+        .res-img img { max-width: 100%; max-height: 400px; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.1)); transition: transform 0.5s; }
+        .res-img img:hover { transform: scale(1.1); }
         .res-info { flex: 1.5; padding: 60px; display: flex; flex-direction: column; justify-content: center; }
         .res-brand { color: var(--accent); letter-spacing: 2px; font-weight: 700; font-size: 14px; text-transform: uppercase; }
-        .res-name { font-family: 'Syne', sans-serif; font-size: 50px; font-weight: 800; margin: 10px 0 20px 0; line-height: 1; }
-        .res-desc { color: #666; line-height: 1.6; margin-bottom: 30px; }
+        .res-name { font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800; margin: 10px 0 20px 0; line-height: 1; color: #222; }
+        .res-desc { color: #666; line-height: 1.6; margin-bottom: 30px; font-size: 17px; }
 
         @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
 
@@ -293,7 +334,7 @@
             .hero-title { font-size: 4rem; }
             #result-area { flex-direction: column; }
             .glass-panel { padding: 40px 20px; }
-            .bg-container { width: 200vw; height: 100vh; top:0; left: -50%; }
+            .bg-container { width: 350vw; left: -125vw; }
         }
     </style>
 </head>
@@ -308,46 +349,78 @@
 
     <div class="bg-container">
         <div class="marquee-row left">
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?q=80&w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?q=80&w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1585232351009-31336c9329ef?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615160898522-86d1f03eb302?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1585232351009-31336c9329ef?w=500');"></div>
         </div>
+
         <div class="marquee-row right">
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?q=80&w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?q=80&w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1616092042654-20b171638210?q=80&w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?q=80&w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?q=80&w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1616092042654-20b171638210?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?w=500');"></div>
+             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1616092042654-20b171638210?w=500');"></div>
+             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?w=500');"></div>
+             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?w=500');"></div>
         </div>
+
         <div class="marquee-row left">
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?q=80&w=400');"></div>
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400');"></div>
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?q=80&w=400');"></div>
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?q=80&w=400');"></div>
-             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1557827983-012eb6ea8dc1?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1523293188086-b469da3e0681?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1594035910387-fea4779426e9?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1557827983-012eb6ea8dc1?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=500');"></div>
         </div>
+
         <div class="marquee-row right">
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615634260167-c8cdede054de?q=80&w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1557827983-012eb6ea8dc1?q=80&w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?q=80&w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1615634260167-c8cdede054de?q=80&w=400');"></div>
-            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1557827983-012eb6ea8dc1?q=80&w=400');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1605618739178-54b033d59e35?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1550525811-e5869dd03032?w=500');"></div>
+             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?w=500');"></div>
+             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1541643600914-78b084683601?w=500');"></div>
+             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1605618739178-54b033d59e35?w=500');"></div>
+        </div>
+
+        <div class="marquee-row left">
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1587017539504-67cfb48031d3?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500');"></div>
+             <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1595867275496-2679dc6eb9e3?w=500');"></div>
+            <div class="m-img" style="background-image: url('https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500');"></div>
         </div>
     </div>
 
     <div id="welcome" class="hero-section">
         <div class="glass-panel">
             
-            <div class="face-container">
-                <div class="eyes-wrapper">
-                    <div class="eye"><div class="pupil"></div></div>
-                    <div class="eye"><div class="pupil"></div></div>
+            <div class="bottle-char-container">
+                <div class="bottle-char">
+                    <div class="b-cap"></div>
+                    <div class="b-body">
+                        <div class="b-liquid"></div>
+                        <div class="b-face">
+                            <div class="eyes-row">
+                                <div class="b-eye"><div class="b-pupil"></div></div>
+                                <div class="b-eye"><div class="b-pupil"></div></div>
+                            </div>
+                            <div class="b-mouth"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="mouth"></div>
             </div>
 
             <h1 class="hero-title">WELCOME</h1>
@@ -367,66 +440,87 @@
             <div class="question-card active" id="q1">
                 <h2 class="q-text">1. Hangi ortamda kendini "evinde" hissedersin?</h2>
                 <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q1', 'q2')">🌺 Çiçek bahçelerinde</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q1', 'q2')">☀️ Güneşli bir plajda</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q1', 'q2')">🕯️ Loş bir kütüphanede</button>
-                    <button class="opt-btn" onclick="nextQ('sik', 'q1', 'q2')">🏙️ Lüks bir plaza katında</button>
+                    <button class="opt-btn" onclick="nextQ('romantik', 'q1', 'q2')">🌺 Renkli çiçek bahçelerinde</button>
+                    <button class="opt-btn" onclick="nextQ('enerjik', 'q1', 'q2')">☀️ Güneşli ve kalabalık bir plajda</button>
+                    <button class="opt-btn" onclick="nextQ('gizemli', 'q1', 'q2')">🕯️ Loş, eski bir kütüphanede</button>
+                    <button class="opt-btn" onclick="nextQ('sik', 'q1', 'q2')">🏙️ Şehrin tepesinde lüks bir plaza katında</button>
                 </div>
             </div>
 
             <div class="question-card" id="q2">
                 <h2 class="q-text">2. Arkadaşların seni nasıl tanımlar?</h2>
                 <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q2', 'q3')">🕊️ Sakin ve Güvenilir</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q2', 'q3')">🎉 Eğlenceli ve Çılgın</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q2', 'q3')">🗝️ Derin ve Sessiz</button>
-                    <button class="opt-btn" onclick="nextQ('gurme', 'q2', 'q3')">🍰 Tatlı ve Cana Yakın</button>
+                    <button class="opt-btn" onclick="nextQ('temiz', 'q2', 'q3')">🕊️ Sakin, düzenli ve güvenilir</button>
+                    <button class="opt-btn" onclick="nextQ('enerjik', 'q2', 'q3')">🎉 Grubun enerji kaynağı, çılgın</button>
+                    <button class="opt-btn" onclick="nextQ('gizemli', 'q2', 'q3')">🗝️ Derin, sessiz ve gözlemci</button>
+                    <button class="opt-btn" onclick="nextQ('gurme', 'q2', 'q3')">🍰 Tatlı, sıcakkanlı ve sarıp sarmalayan</button>
                 </div>
             </div>
 
             <div class="question-card" id="q3">
                 <h2 class="q-text">3. Favori aksesuarın nedir?</h2>
                 <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('sik', 'q3', 'q4')">⌚ Şık bir saat</button>
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q3', 'q4')">🧣 İpek bir fular</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q3', 'q4')">🕶️ Siyah güneş gözlüğü</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q3', 'q4')">👟 Renkli sneakerlar</button>
+                    <button class="opt-btn" onclick="nextQ('sik', 'q3', 'q4')">⌚ Şık bir saat veya minimalist altın kolye</button>
+                    <button class="opt-btn" onclick="nextQ('romantik', 'q3', 'q4')">🧣 İpek bir fular veya inci küpeler</button>
+                    <button class="opt-btn" onclick="nextQ('gizemli', 'q3', 'q4')">🕶️ Siyah güneş gözlüğü veya deri eldiven</button>
+                    <button class="opt-btn" onclick="nextQ('enerjik', 'q3', 'q4')">👟 Renkli sneakerlar veya spor şapka</button>
                 </div>
             </div>
 
             <div class="question-card" id="q4">
                 <h2 class="q-text">4. Akşam yemeği için tercihin?</h2>
                 <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('gurme', 'q4', 'q5')">🍝 İtalyan mutfağı & Tatlı</button>
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q4', 'q5')">🥗 Hafif bir salata</button>
-                    <button class="opt-btn" onclick="nextQ('sik', 'q4', 'q5')">🥩 Fine-dining restoran</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q4', 'q5')">🍷 Şarap ve peynir tabağı</button>
+                    <button class="opt-btn" onclick="nextQ('gurme', 'q4', 'q5')">🍝 Bol soslu İtalyan makarnası ve Tiramisu</button>
+                    <button class="opt-btn" onclick="nextQ('temiz', 'q4', 'q5')">🥗 Taze yeşilliklerle hazırlanmış hafif bir salata</button>
+                    <button class="opt-btn" onclick="nextQ('sik', 'q4', 'q5')">🥩 Şık bir restoranda şefin tadım menüsü</button>
+                    <button class="opt-btn" onclick="nextQ('gizemli', 'q4', 'q5')">🍷 Kırmızı şarap ve zengin peynir tabağı</button>
                 </div>
             </div>
 
             <div class="question-card" id="q5">
-                <h2 class="q-text">5. Hangi renk sana daha yakın?</h2>
+                <h2 class="q-text">5. Hangi renk paleti sana daha yakın?</h2>
                 <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q5', 'q6')">🌸 Pembe & Lila</button>
-                    <button class="opt-btn" onclick="nextQ('enerjik', 'q5', 'q6')">🍊 Turuncu & Sarı</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q5', 'q6')">🖤 Siyah & Mor</button>
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q5', 'q6')">⚪ Beyaz & Mavi</button>
+                    <button class="opt-btn" onclick="nextQ('romantik', 'q5', 'q6')">🌸 Pastel Pembe, Lila ve Krem</button>
+                    <button class="opt-btn" onclick="nextQ('enerjik', 'q5', 'q6')">🍊 Canlı Turuncu, Neon Sarı ve Mavi</button>
+                    <button class="opt-btn" onclick="nextQ('gizemli', 'q5', 'q6')">🖤 Gece Mavisi, Siyah ve Bordo</button>
+                    <button class="opt-btn" onclick="nextQ('temiz', 'q5', 'q6')">⚪ Bembeyaz, Gök Mavisi ve Mint</button>
                 </div>
             </div>
 
             <div class="question-card" id="q6">
-                <h2 class="q-text">6. Son olarak, hangi hissi arıyorsun?</h2>
+                <h2 class="q-text">6. Sabah rutinin nasıldır?</h2>
                 <div class="opts">
-                    <button class="opt-btn" onclick="nextQ('romantik', 'q6', 'calc')">❤️ Aşk</button>
-                    <button class="opt-btn" onclick="nextQ('sik', 'q6', 'calc')">👑 Güç</button>
-                    <button class="opt-btn" onclick="nextQ('temiz', 'q6', 'calc')">🛁 Huzur</button>
-                    <button class="opt-btn" onclick="nextQ('gizemli', 'q6', 'calc')">🔥 Tutku</button>
+                    <button class="opt-btn" onclick="nextQ('enerjik', 'q6', 'q7')">🏃‍♀️ Erken kalkıp koşuya çıkarım</button>
+                    <button class="opt-btn" onclick="nextQ('gurme', 'q6', 'q7')">☕ Uzun uzun kahve keyfi yaparım</button>
+                    <button class="opt-btn" onclick="nextQ('temiz', 'q6', 'q7')">🚿 Ferahlatıcı bir duş alıp hazırlanırım</button>
+                    <button class="opt-btn" onclick="nextQ('sik', 'q6', 'q7')">📅 Günümü planlar, maillerime bakarım</button>
+                </div>
+            </div>
+
+            <div class="question-card" id="q7">
+                <h2 class="q-text">7. İdeal bir film akşamı sence nasıldır?</h2>
+                <div class="opts">
+                    <button class="opt-btn" onclick="nextQ('romantik', 'q7', 'q8')">🎬 Mendilleri hazırlayıp bir aşk filmi izlemek</button>
+                    <button class="opt-btn" onclick="nextQ('gizemli', 'q7', 'q8')">🕵️‍♂️ Sonu tahmin edilemeyen bir psikolojik gerilim</button>
+                    <button class="opt-btn" onclick="nextQ('enerjik', 'q7', 'q8')">😂 Gülmekten karnımın ağrıdığı bir komedi</button>
+                    <button class="opt-btn" onclick="nextQ('sik', 'q7', 'q8')">🏆 Ödüllü bir sanat filmi veya biyografi</button>
+                </div>
+            </div>
+
+            <div class="question-card" id="q8">
+                <h2 class="q-text">8. Son olarak, parfümünden ne beklersin?</h2>
+                <div class="opts">
+                    <button class="opt-btn" onclick="nextQ('romantik', 'q8', 'calc')">❤️ Beni çekici ve unutulmaz kılsın</button>
+                    <button class="opt-btn" onclick="nextQ('sik', 'q8', 'calc')">👑 Girdiğim ortamda gücümü hissettirsin</button>
+                    <button class="opt-btn" onclick="nextQ('temiz', 'q8', 'calc')">🛁 Bana temizlik ve huzur versin</button>
+                    <button class="opt-btn" onclick="nextQ('gurme', 'q8', 'calc')">🍪 İnsanlarda bana sarılma isteği uyandırsın</button>
                 </div>
             </div>
 
             <div class="question-card" id="loading">
-                <h2 class="q-text">Analiz Yapılıyor...</h2>
-                <div style="font-size:40px; animation:spin 1s infinite">✨</div>
+                <h2 class="q-text">Yapay Zeka Analiz Ediyor...</h2>
+                <div style="font-size:50px; animation:spin 1s infinite">✨</div>
+                <p style="margin-top:20px; color:#666;">Cevapların taranıyor...</p>
             </div>
 
             <div id="result-area">
@@ -438,13 +532,13 @@
                     <h1 class="res-name" id="r-name">Parfüm Adı</h1>
                     <p class="res-desc" id="r-desc">Açıklama</p>
                     
-                    <strong style="display:block; margin-bottom:5px; color:#333;">ÜST NOTALAR</strong>
+                    <strong style="display:block; margin-bottom:5px; color:#333; font-size:14px;">ÜST NOTALAR</strong>
                     <p id="r-top" style="margin-bottom:20px; color:#777;">...</p>
 
-                    <strong style="display:block; margin-bottom:5px; color:#333;">DİP NOTALAR</strong>
+                    <strong style="display:block; margin-bottom:5px; color:#333; font-size:14px;">DİP NOTALAR</strong>
                     <p id="r-base" style="color:#777;">...</p>
 
-                    <button onclick="location.reload()" class="cta-btn" style="background:#333; margin-top:30px; font-size:14px;">YENİDEN BAŞLA</button>
+                    <button onclick="location.reload()" class="cta-btn" style="background:#222; margin-top:30px; font-size:14px;">TESTİ TEKRARLA</button>
                 </div>
             </div>
 
@@ -452,43 +546,63 @@
     </div>
 
     <script>
-        // GÖZ & KAFA TAKİBİ
-        const pupils = document.querySelectorAll('.pupil');
-        const face = document.querySelector('.face-container');
+        // --- 3D ŞİŞE & GÖZ TAKİBİ ---
+        const pupils = document.querySelectorAll('.b-pupil');
+        const bottle = document.querySelector('.bottle-char');
 
         window.addEventListener('mousemove', (e) => {
+            // Gözler için
             pupils.forEach(pupil => {
                 const rect = pupil.getBoundingClientRect();
                 const x = (rect.left + rect.right) / 2;
                 const y = (rect.top + rect.bottom) / 2;
                 const angle = Math.atan2(e.clientY - y, e.clientX - x);
-                const dist = Math.min(6, Math.hypot(e.clientX - x, e.clientY - y) / 15);
-                pupil.style.transform = `translate(-50%, -50%) translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`;
+                const dist = Math.min(5, Math.hypot(e.clientX - x, e.clientY - y) / 10);
+                pupil.style.transform = `translate(${Math.cos(angle)*dist}px, ${Math.sin(angle)*dist}px)`;
             });
 
-            if(face) {
+            // Şişe Gövdesi için 3D Dönüş
+            if(bottle) {
                 const centerX = window.innerWidth / 2;
                 const centerY = window.innerHeight / 2;
-                const moveX = (e.clientX - centerX) / 50;
-                const moveY = (e.clientY - centerY) / 50;
-                face.style.transform = `rotateY(${moveX}deg) rotateX(${-moveY}deg)`;
+                const moveX = (e.clientX - centerX) / 30; // Hassasiyet
+                const moveY = (e.clientY - centerY) / 30;
+                bottle.style.transform = `rotateY(${moveX}deg) rotateX(${-moveY}deg)`;
             }
         });
 
-        // VERİTABANI
+        // --- GENİŞLETİLMİŞ VERİTABANI (15 PARFÜM) ---
         const db = [
-            { id:1, cat:'romantik', brand:'GUCCI', name:'Bloom', img:'https://fimgs.net/mdimg/perfume/375x500.44894.jpg', desc:'Yasemin ve sümbülteberin rüya gibi dansı.', top:'Rangoon Sarmaşığı', base:'Sümbülteber' },
-            { id:2, cat:'enerjik', brand:'D&G', name:'Light Blue', img:'https://fimgs.net/mdimg/perfume/375x500.1068.jpg', desc:'Sicilya limonunun ferahlatıcı enerjisi.', top:'Limon, Elma', base:'Sedir Ağacı' },
-            { id:3, cat:'gizemli', brand:'TOM FORD', name:'Black Orchid', img:'https://fimgs.net/mdimg/perfume/375x500.1018.jpg', desc:'Lüks, karanlık ve şehvetli.', top:'Trüf Mantarı', base:'Bitter Çikolata' },
-            { id:4, cat:'sik', brand:'CHANEL', name:'Coco Mademoiselle', img:'https://fimgs.net/mdimg/perfume/375x500.611.jpg', desc:'Modern, özgür ve zarif.', top:'Portakal', base:'Paçuli, Misk' },
-            { id:5, cat:'gurme', brand:'YSL', name:'Black Opium', img:'https://fimgs.net/mdimg/perfume/375x500.25324.jpg', desc:'Kahve ve vanilyanın tatlı bağımlılığı.', top:'Armut, Karabiber', base:'Vanilya, Kahve' },
-            { id:6, cat:'temiz', brand:'MAISON MARGIELA', name:'Lazy Sunday Morning', img:'https://fimgs.net/mdimg/perfume/375x500.20542.jpg', desc:'Temiz çarşafların huzur verici kokusu.', top:'Aldehitler', base:'Beyaz Misk' }
+            // Romantik
+            { id:1, cat:'romantik', brand:'GUCCI', name:'Bloom', img:'https://fimgs.net/mdimg/perfume/375x500.44894.jpg', desc:'Yasemin ve sümbülteberin rüya gibi dansı. Tam bir çiçek bahçesi.', top:'Rangoon Sarmaşığı', base:'Sümbülteber' },
+            { id:2, cat:'romantik', brand:'CHLOÉ', name:'Signature', img:'https://fimgs.net/mdimg/perfume/375x500.253.jpg', desc:'Pudralı gül kokusunun en modern ve zarif hali.', top:'Şakayık, Liçi', base:'Amber, Sedir' },
+            { id:3, cat:'romantik', brand:'PARFUMS DE MARLY', name:'Delina', img:'https://fimgs.net/mdimg/perfume/375x500.43235.jpg', desc:'Türk gülü ve ravent ile büyüleyici, prenseslere layık bir koku.', top:'Bergamot, Ravent', base:'Kaşmir Ağacı' },
+            
+            // Enerjik
+            { id:4, cat:'enerjik', brand:'DOLCE & GABBANA', name:'Light Blue', img:'https://fimgs.net/mdimg/perfume/375x500.1068.jpg', desc:'Sicilya limonunun ferahlatıcı enerjisi ve yaz neşesi.', top:'Limon, Elma', base:'Sedir Ağacı' },
+            { id:5, cat:'enerjik', brand:'VERSACE', name:'Versense', img:'https://fimgs.net/mdimg/perfume/375x500.5739.jpg', desc:'Akdeniz doğasının uyanışını simgeleyen, canlı ve yeşil bir koku.', top:'Bergamot, Yeşil Mandalina', base:'Zeytin Ağacı' },
+            { id:6, cat:'enerjik', brand:'MOSCHINO', name:'Funny!', img:'https://fimgs.net/mdimg/perfume/375x500.1226.jpg', desc:'Eğlenceli, kıpır kıpır ve turunçgil dolu bir gençlik iksiri.', top:'Acı Portakal, Frenk Üzümü', base:'Yeşil Çay' },
+
+            // Gizemli
+            { id:7, cat:'gizemli', brand:'TOM FORD', name:'Black Orchid', img:'https://fimgs.net/mdimg/perfume/375x500.1018.jpg', desc:'Lüks, karanlık ve şehvetli. İddialı karakterlerin imzası.', top:'Trüf Mantarı, Ylang Ylang', base:'Bitter Çikolata, Paçuli' },
+            { id:8, cat:'gizemli', brand:'DIOR', name:'Hypnotic Poison', img:'https://fimgs.net/mdimg/perfume/375x500.219.jpg', desc:'Yasak meyvenin cazibesi. Büyüleyici ve oryantal.', top:'Hindistan Cevizi, Mürdüm Eriği', base:'Vanilya, Badem' },
+            { id:9, cat:'gizemli', brand:'MUGLER', name:'Alien', img:'https://fimgs.net/mdimg/perfume/375x500.707.jpg', desc:'Başka bir dünyadan gelmiş gibi. Güçlü yasemin ve amber patlaması.', top:'Yasemin', base:'Beyaz Amber' },
+
+            // Şık
+            { id:10, cat:'sik', brand:'CHANEL', name:'Coco Mademoiselle', img:'https://fimgs.net/mdimg/perfume/375x500.611.jpg', desc:'Modern, özgür ve zarif kadının ikonik kokusu.', top:'Portakal, Mandalina', base:'Paçuli, Misk' },
+            { id:11, cat:'sik', brand:'YSL', name:'Libre', img:'https://fimgs.net/mdimg/perfume/375x500.56586.jpg', desc:'Özgürlüğün kokusu. Maskülen lavanta ile feminen portakal çiçeğinin dansı.', top:'Lavanta, Mandalina', base:'Vanilya, Ambergris' },
+            { id:12, cat:'sik', brand:'GIORGIO ARMANI', name:'Sì', img:'https://fimgs.net/mdimg/perfume/375x500.18240.jpg', desc:'İtalyan zarafeti. Hem tatlı hem de sofistike.', top:'Frenk Üzümü Nektarı', base:'Sarı Odun, Misk' },
+
+            // Gurme & Temiz (Ekstra)
+            { id:13, cat:'gurme', brand:'YSL', name:'Black Opium', img:'https://fimgs.net/mdimg/perfume/375x500.25324.jpg', desc:'Kahve ve vanilyanın tatlı bağımlılığı. Gece için mükemmel.', top:'Armut, Karabiber', base:'Vanilya, Kahve' },
+            { id:14, cat:'gurme', brand:'KILIAN', name:'Love, Don\'t Be Shy', img:'https://fimgs.net/mdimg/perfume/375x500.4322.jpg', desc:'Marshmallow ve portakal çiçeği ile en tatlı günah.', top:'Neroli, Bergamot', base:'Marshmallow, Karamel' },
+            { id:15, cat:'temiz', brand:'MAISON MARGIELA', name:'Lazy Sunday Morning', img:'https://fimgs.net/mdimg/perfume/375x500.20542.jpg', desc:'Pazar sabahı temiz çarşafların verdiği o eşsiz huzur.', top:'Aldehitler, Armut', base:'Beyaz Misk' }
         ];
 
         let scores = { romantik:0, enerjik:0, gizemli:0, sik:0, gurme:0, temiz:0 };
 
         function nextQ(cat, cur, nxt) {
-            if(scores[cat] !== undefined) scores[cat]++;
+            if(scores[cat] !== undefined) scores[cat] += 2; // Puan ağırlığını artırdım
             
             document.getElementById(cur).style.display = 'none';
             document.getElementById(cur).classList.remove('active');
@@ -507,10 +621,16 @@
             setTimeout(() => {
                 document.getElementById('loading').style.display = 'none';
                 
+                // En yüksek skoru bul
                 let winner = Object.keys(scores).reduce((a,b) => scores[a] > scores[b] ? a : b);
+                
+                // O kategorideki parfümleri filtrele
                 let pool = db.filter(x => x.cat === winner);
+                
+                // Eğer havuz boşsa (yedek)
                 if(pool.length === 0) pool = db.filter(x => x.cat === 'sik');
                 
+                // Rastgele seç
                 let p = pool[Math.floor(Math.random()*pool.length)];
 
                 document.getElementById('r-img').src = p.img;
@@ -524,7 +644,7 @@
                 r.style.display = 'flex';
                 if(window.innerWidth <= 768) r.style.flexDirection = 'column';
 
-            }, 2000);
+            }, 2500); // Biraz daha uzun analiz süresi (gerçekçilik için)
         }
     </script>
 </body>
