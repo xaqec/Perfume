@@ -1,82 +1,292 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Parfüm AI | Signature Scent Finder</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parfüm Kütüphanesi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* GENEL AYARLAR */
+        html {
+            scroll-behavior: smooth; /* Yumuşak kaydırma efekti */
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff; /* Üst kısım beyaz istedin */
+            font-family: 'Montserrat', sans-serif;
+            color: #5c4033;
+        }
 
-  <link rel="stylesheet" href="style.css">
+        /* 1. BÖLÜM: WELCOME EKRANI (AÇILIŞ) */
+        .welcome-section {
+            height: 100vh; /* Tüm ekranı kapla */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            position: relative;
+        }
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+        .welcome-card {
+            width: 85%;
+            height: 80%; /* Ekranın büyük kısmını kaplayan kare */
+            background: linear-gradient(135deg, #fdfbf7 0%, #fae1e6 100%); /* Soft Gold & Pembe Geçiş */
+            border-radius: 40px; /* Kenarları yuvarlatılmış */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.15); /* Hafif Gold Gölge */
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 80px; /* Dev Welcome Yazısı */
+            color: #d4af37; /* Gold Rengi */
+            margin: 0;
+            z-index: 2;
+            /* İstediğin gölge efekti: */
+            text-shadow: 4px 4px 10px rgba(180, 140, 60, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .parfum-gorsel {
+            margin-top: 20px;
+            max-height: 40vh; /* Resim yüksekliği ayarı */
+            width: auto;
+            z-index: 2;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            transition: transform 0.3s;
+        }
+
+        .parfum-gorsel:hover {
+            transform: scale(1.05); /* Üzerine gelince hafif büyür */
+        }
+
+        .scroll-hint {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #888;
+            animation: zipla 2s infinite;
+            cursor: pointer;
+        }
+
+        /* 2. BÖLÜM: PARFÜM SEÇİCİ (AŞAĞI KAYINCA GELEN KISIM) */
+        .selector-section {
+            min-height: 100vh;
+            background-color: #fae1e6; /* Soft Pembe Zemin */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .kutu {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(168, 110, 110, 0.15);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            border: 2px solid #fff;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #bc8f8f;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        select {
+            width: 100%;
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #ecccd8;
+            background-color: #fff9fb;
+            color: #555;
+            font-size: 16px;
+            margin-bottom: 25px;
+            outline: none;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        button {
+            background: linear-gradient(45deg, #d4af37, #e0c060);
+            border: none;
+            color: white;
+            padding: 18px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        /* SONUÇ KARTI TASARIMI */
+        #sonucAlani {
+            margin-top: 40px;
+            display: none;
+            padding: 20px;
+            background: #fffbf0;
+            border-radius: 15px;
+            border: 1px solid #f0e6d2;
+            animation: acilma 0.8s ease;
+        }
+
+        .parfum-adi {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            color: #d4af37;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .marka {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #aaa;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .notalar {
+            font-size: 15px;
+            color: #777;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        @keyframes zipla {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        @keyframes acilma {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
 </head>
-
 <body>
 
-  <!-- HERO -->
-  <header class="hero">
-    <h1>Find Your<br><span>Signature Scent</span></h1>
-    <p>Yapay zekâ destekli parfüm önerileriyle sana en uygun kokuyu keşfet</p>
-  </header>
-
-  <!-- AI QUIZ -->
-  <section class="quiz">
-    <h2>Koku Profilini Oluşturalım</h2>
-
-    <div class="quiz-grid">
-
-      <div class="quiz-item">
-        <label>Cinsiyet</label>
-        <select id="gender">
-          <option value="kadın">Kadın</option>
-          <option value="erkek">Erkek</option>
-          <option value="unisex">Unisex</option>
-        </select>
-      </div>
-
-      <div class="quiz-item">
-        <label>Mevsim</label>
-        <select id="season">
-          <option value="ilkbahar">İlkbahar</option>
-          <option value="yaz">Yaz</option>
-          <option value="sonbahar">Sonbahar</option>
-          <option value="kış">Kış</option>
-        </select>
-      </div>
-
-      <div class="quiz-item">
-        <label>Favori Nota</label>
-        <select id="note">
-          <option value="vanilya">Vanilya</option>
-          <option value="çiçeksi">Çiçeksi</option>
-          <option value="ferah">Ferah</option>
-          <option value="odunsu">Odunsu</option>
-          <option value="baharatlı">Baharatlı</option>
-        </select>
-      </div>
-
+    <div class="welcome-section">
+        <div class="welcome-card">
+            <h1 class="welcome-text">Welcome</h1>
+            
+            <img src="https://upload.wikimedia.org/wikipedia/en/2/2a/Billie_Eilish_-_Eilish.png" alt="Eilish No 1 Perfume" class="parfum-gorsel">
+            
+            <div class="scroll-hint" onclick="asagiKaydir()">
+                Kütüphaneyi Keşfetmek İçin Kaydır ▼
+            </div>
+        </div>
     </div>
 
-    <button class="primary-btn" onclick="runAI()">Parfümümü Bul</button>
+    <div class="selector-section" id="kutuphaneAlani">
+        <div class="kutu">
+            <h2>Parfüm Kütüphanesi</h2>
+            <p style="color:#999; margin-bottom: 30px;">Seni yansıtan notaları keşfet.</p>
 
-    <div id="result" class="result-box"></div>
-  </section>
+            <select id="duyguDurumu">
+                <option value="romantik">Romantik & Çiçeksi (Gül, Şakayık)</option>
+                <option value="enerjik">Enerjik & Narenciye (Limon, Bergamot)</option>
+                <option value="gizemli">Gizemli & Oryantal (Amber, Tütsü)</option>
+                <option value="sik">Şık & Odunsu (Sedir, Paçuli)</option>
+                <option value="gurme">Tatlı & Gurme (Vanilya, Karamel)</option>
+                <option value="temiz">Temiz & Sabunsu (Misk, Aldehit)</option>
+            </select>
 
-  <!-- PERFUME LIBRARY -->
-  <section class="library">
-    <h2>Parfüm Kütüphanesi</h2>
-    <p class="subtitle">Seçilmiş ikonik kokular</p>
+            <button onclick="parfumOner()">Ruh Eşimi Bul</button>
 
-    <div id="perfume-grid"></div>
-  </section>
+            <div id="sonucAlani">
+                <span class="marka" id="parfumMarka">MARKA</span>
+                <div class="parfum-adi" id="parfumIsmi">Parfüm Adı</div>
+                <div class="notalar" id="parfumDetay">Notalar burada belirecek...</div>
+            </div>
+        </div>
+    </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2025 Parfüm AI — All rights reserved</p>
-  </footer>
+    <script>
+        // KÜTÜPHANE (GENİŞLETİLMİŞ VERİ TABANI)
+        const parfumler = {
+            'romantik': [
+                {marka: "GUCCI", ad: "Bloom", detay: "Doğal Sümbülteber ve Yasemin tomurcuklarının zengin kokusu."},
+                {marka: "CHLOÉ", ad: "Signature", detay: "Pudralı gül, manolya ve amberin modern birleşimi."},
+                {marka: "DIOR", ad: "Miss Dior Blooming Bouquet", detay: "Şakayık ve Şam gülü ile yumuşak bir dokunuş."},
+                {marka: "LANCOME", ad: "Idôle", detay: "Temiz gül ve yasemin, beyaz şipre ile buluşuyor."},
+                {marka: "PARFUMS DE MARLY", ad: "Delina", detay: "Türk gülü, liçi meyvesi ve ravent ile büyüleyici."}
+            ],
+            'enerjik': [
+                {marka: "DOLCE & GABBANA", ad: "Light Blue", detay: "Sicilya limonu ve yeşil elmanın ferahlatıcı esintisi."},
+                {marka: "CHANEL", ad: "Chance Eau Fraiche", detay: "Canlı ağaç kavunu ve tik ağacı notaları."},
+                {marka: "JO MALONE", ad: "Lime Basil & Mandarin", detay: "Mandalina, fesleğen ve beyaz kekiğin modern klasiği."},
+                {marka: "VERSACE", ad: "Versense", detay: "Akdeniz meyveleri ve zambak çiçeğinin enerjisi."},
+                {marka: "HERMES", ad: "Un Jardin Sur Le Nil", detay: "Yeşil mango, lotus ve tütsü ile nil nehrinde bir gezi."}
+            ],
+            'gizemli': [
+                {marka: "YSL", ad: "Black Opium", detay: "Siyah kahve ve vanilyanın bağımlılık yapan zıtlığı."},
+                {marka: "TOM FORD", ad: "Black Orchid", detay: "Siyah orkide, baharatlar ve bitter çikolata."},
+                {marka: "DIOR", ad: "Hypnotic Poison", detay: "Yasak meyve, badem ve vanilyanın büyüleyici karışımı."},
+                {marka: "MUGLER", ad: "Alien", detay: "Yasemin, kaşmir ağacı ve beyaz amberin gizemi."},
+                {marka: "VERSACE", ad: "Crystal Noir", detay: "Zencefil, kakule ve biber ile kremsi gardenya."}
+            ],
+            'sik': [
+                {marka: "CHANEL", ad: "Coco Mademoiselle", detay: "Portakal, paçuli ve Türk gülünün ikonik duruşu."},
+                {marka: "GIORGIO ARMANI", ad: "Sì", detay: "Frenk üzümü nektarı ve modern şipre."},
+                {marka: "NARCISO RODRIGUEZ", ad: "For Her EDT", detay: "Misk, portakal çiçeği ve osmanthusun zarafeti."},
+                {marka: "YSL", ad: "Libre", detay: "Fas portakal çiçeği ve Fransız lavantasının özgürlüğü."},
+                {marka: "BOTTEGA VENETA", ad: "Bottega Veneta", detay: "Deri, paçuli ve meşe yosununun lüksü."}
+            ],
+            'gurme': [
+                {marka: "BILLIE EILISH", ad: "Eilish No. 1", detay: "Şekerli yapraklar, kremsi vanilya ve sıcak misk."},
+                {marka: "PRADA", ad: "Candy", detay: "Karamel, misk ve benzoin ile şımarık bir tatlılık."},
+                {marka: "VIKTOR&ROLF", ad: "Bonbon", detay: "Karamelize şeftali ve portakal çiçeği."},
+                {marka: "KILIAN", ad: "Love, Don't Be Shy", detay: "Marshmallow, portakal çiçeği ve vanilya rüyası."},
+                {marka: "AQUOLINA", ad: "Pink Sugar", detay: "Pamuk şeker, çilek ve vanilya patlaması."}
+            ],
+            'temiz': [
+                {marka: "MAISON MARGIELA", ad: "Lazy Sunday Morning", detay: "Taze yıkanmış çarşaflar, inci çiçeği ve beyaz misk."},
+                {marka: "BYREDO", ad: "Blanche", detay: "Beyaz gül, menekşe ve sandal ağacının saf duruşu."},
+                {marka: "CLEAN", ad: "Warm Cotton", detay: "Limon, deniz notaları ve amber ile sıcacık pamuk."},
+                {marka: "PHILOSOPHY", ad: "Amazing Grace", detay: "Bergamot ve müge çiçeğinin inanılmaz hafifliği."},
+                {marka: "JULIETTE HAS A GUN", ad: "Not A Perfume", detay: "Tek bir nota (Cetalox) ile teninizin en güzel hali."}
+            ]
+        };
 
-  <script src="data.js"></script>
-  <script src="script.js"></script>
+        function parfumOner() {
+            const secim = document.getElementById('duyguDurumu').value;
+            const liste = parfumler[secim];
+            const rastgeleSayi = Math.floor(Math.random() * liste.length);
+            const secilenParfum = liste[rastgeleSayi];
 
+            document.getElementById('parfumMarka').innerText = secilenParfum.marka;
+            document.getElementById('parfumIsmi').innerText = secilenParfum.ad;
+            document.getElementById('parfumDetay').innerText = secilenParfum.detay;
+            
+            document.getElementById('sonucAlani').style.display = "block";
+        }
+
+        function asagiKaydir() {
+            document.getElementById('kutuphaneAlani').scrollIntoView();
+        }
+    </script>
 </body>
 </html>
