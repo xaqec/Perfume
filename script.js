@@ -15,12 +15,18 @@ const GAME = {
         document.getElementById('screen-game').classList.add('active');
         
         GAME.renderStep();
-        BG_ENGINE.mode = 'game'; // Arka planı değiştir
+        BG_ENGINE.mode = 'game'; 
     },
 
     renderStep: () => {
         const stories = STORY_DATA[GAME.gender];
         
+        // Hata Kontrolü: Eğer hikaye verisi yoksa
+        if (!stories) {
+            console.error("Hikaye verisi bulunamadı!");
+            return;
+        }
+
         // Oyun Bitti mi?
         if (GAME.step >= stories.length) {
             GAME.finish();
@@ -92,11 +98,12 @@ const GAME = {
 // --- ARKA PLAN & ATEŞBÖCEĞİ MOTORU (CANVAS) ---
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
+const bgContainer = document.getElementById('canvas-container');
 
 let width, height;
 let particles = [];
 
-// Ateşböceği Sınıfı (Flicker Düzeltildi)
+// Ateşböceği Sınıfı
 class Firefly {
     constructor() {
         this.reset();
@@ -105,10 +112,10 @@ class Firefly {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
         this.size = Math.random() * 2 + 0.5;
-        this.speedX = (Math.random() - 0.5) * 0.5; // Yavaşlatıldı
+        this.speedX = (Math.random() - 0.5) * 0.5;
         this.speedY = (Math.random() - 0.5) * 0.5;
         this.alpha = Math.random();
-        this.fadeSpeed = Math.random() * 0.01 + 0.002; // Çok yumuşak geçiş
+        this.fadeSpeed = Math.random() * 0.01 + 0.002;
         this.fadingOut = Math.random() > 0.5;
         this.color = `255, 215, 0`; // Gold
     }
@@ -116,7 +123,6 @@ class Firefly {
         this.x += this.speedX;
         this.y += this.speedY;
 
-        // Yumuşak Alpha Geçişi
         if (this.fadingOut) {
             this.alpha -= this.fadeSpeed;
             if (this.alpha <= 0) { this.fadingOut = false; this.reset(); }
@@ -125,7 +131,6 @@ class Firefly {
             if (this.alpha >= 1) this.fadingOut = true;
         }
 
-        // Sınır Kontrolü
         if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
     }
     draw() {
@@ -139,18 +144,27 @@ class Firefly {
     }
 }
 
-// Ortam Çizimi (Abstract Shapes for Scenes)
+// Arka Plan Renk Motoru
 const BG_ENGINE = {
     mode: 'welcome',
-    sceneType: 'forest', // forest, mansion, city...
+    sceneType: 'forest',
     
-    drawScene: () => {
-        // Burada basit geometrik şekillerle "hissi" vereceğiz, fotoğraf yok.
-        if (BG_ENGINE.sceneType === 'forest') {
-            // Hafif yeşil/sisli gradient overlay (CSS'ten ziyade canvas manipülasyonu)
-            // Ama basit tutmak için sadece renk tonunu değiştirebiliriz.
-        }
-    }
+    // Sahneye göre renk paleti döndürür
+    getSceneColor: () => {
+        const type = BG_ENGINE.sceneType;
+        if (type === 'forest') return 'radial-gradient(circle at bottom, #0a1a0a 0%, #000 100%)'; // Yeşilimsi
+        if (type === 'mansion' || type === 'hall') return 'radial-gradient(circle at bottom, #1a0b0b 0%, #000 100%)'; // Kırmızımsı
+        if (type === 'city' || type === 'rain') return 'radial-gradient(circle at bottom, #0b0b1a 0%, #000 100%)'; // Mavimsi
+        if (type === 'luxury' || type === 'room') return 'radial-gradient(circle at bottom, #1a1505 0%, #000 100%)'; // Altınımsı
+        return 'radial-gradient(circle at bottom, #100515 0%, #000000 100%)'; // Default Morumsu
+    },
+
+    // Döngüde kontrol etmeye gerek yok, setter ile değiştirelim
+    set sceneType(val) {
+        this._sceneType = val;
+        if(bgContainer) bgContainer.style.background = this.getSceneColor();
+    },
+    get sceneType() { return this._sceneType; }
 };
 
 function resize() {
@@ -160,18 +174,15 @@ function resize() {
 
 function init() {
     resize();
-    for (let i = 0; i < 150; i++) { // Sayı arttırıldı
+    for (let i = 0; i < 150; i++) {
         particles.push(new Firefly());
     }
     loop();
 }
 
 function loop() {
-    // Hafif iz bırakarak temizleme (Motion Trail)
-    ctx.fillStyle = 'rgba(10, 5, 15, 0.2)'; // Arka plan rengiyle uyumlu, az şeffaf
-    ctx.fillRect(0, 0, width, height);
+    ctx.clearRect(0, 0, width, height); // Temizle
 
-    // Ateşböcekleri
     particles.forEach(p => {
         p.update();
         p.draw();
