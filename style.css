@@ -1,3 +1,5 @@
+/* script.js */
+
 /* --- CSS AYARLARI --- */
 :root {
     --bg-dark: #050505;
@@ -165,9 +167,11 @@ nav a:hover { opacity: 1; color: var(--accent-gold); text-shadow: 0 0 10px rgba(
     background: rgba(10, 5, 15, 0.95); padding: 50px;
     border: 1px solid var(--accent-gold); max-width: 1000px; width: 90%;
     box-shadow: 0 0 100px rgba(212, 175, 55, 0.2);
+    animation: fadeInFixed 1s ease forwards;
 }
 .res-img-wrapper { flex: 1; display: flex; justify-content: center; }
-.res-img { max-height: 400px; filter: drop-shadow(0 20px 40px #000); transform: rotateY(-10deg); transition: 0.5s; }
+.res-img { max-height: 400px; filter: drop-shadow(0 20px 40px #000); transform: rotateY(-10deg); transition: 0.5s; opacity: 0; animation: revealImg 1s 0.5s forwards; }
+@keyframes revealImg { to { opacity: 1; transform: rotateY(0deg); } }
 .res-img:hover { transform: rotateY(0deg) scale(1.05); }
 
 .res-info { flex: 1.5; text-align: left; }
@@ -178,9 +182,42 @@ nav a:hover { opacity: 1; color: var(--accent-gold); text-shadow: 0 0 10px rgba(
 .note span { display:block; color:var(--accent-gold); font-size:12px; margin-bottom:5px; letter-spacing: 1px; }
 .note div { color: #ddd; font-size: 14px; }
 
+/* AI ANALYSIS SCREEN */
+#screen-analysis {
+    display: none;
+    z-index: 100;
+}
+#screen-analysis.active {
+    display: flex;
+}
+.analysis-text {
+    font-family: var(--font-head);
+    font-size: 2rem;
+    color: var(--accent-gold);
+    letter-spacing: 5px;
+    animation: pulse 1.5s infinite;
+}
+.analysis-bar {
+    width: 300px; height: 2px;
+    background: #333;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+}
+.analysis-progress {
+    position: absolute; top:0; left:0; height:100%; width:100%;
+    background: var(--accent-gold);
+    transform: translateX(-100%);
+    animation: analysisLoad 3s ease forwards;
+}
+@keyframes analysisLoad { to { transform: translateX(0); } }
+@keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+
 @media (max-width: 768px) {
     .result-card { flex-direction: column; padding: 20px; }
     .res-img { max-height: 250px; }
     .main-title { font-size: 3.5rem; }
     .story-container { width: 90%; padding: 30px; }
+    nav { gap: 20px; }
 }
