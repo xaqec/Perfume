@@ -171,4 +171,4 @@ const PERFUME_DB = {
         { cat: 'centilmen', brand: 'FREDERIC MALLE', name: 'Musc Ravageur', img: 'https://fimgs.net/mdimg/perfume/375x500.2831.jpg', desc: 'Sofistike, sıcak ve tensel bir başyapıt.', top: 'Lavanta', heart: 'Tarçın', base: 'Vanilya, Misk' },
         { cat: 'centilmen', brand: 'MAISON MARGIELA', name: 'Jazz Club', img: 'https://fimgs.net/mdimg/perfume/375x500.20541.jpg', desc: 'Brooklyn caz kulübü. Puro, rom ve deri koltuklar.', top: 'Pembe Biber', heart: 'Rom', base: 'Tütün Yaprağı' }
     ]
-};
+}; 
