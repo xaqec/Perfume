@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L'Énigme - The Scent RPG</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <nav>
@@ -18,22 +22,27 @@
         <canvas id="bg-canvas"></canvas>
     </div>
 
+    <!-- About Modal -->
     <div class="modal-overlay" id="aboutModal">
         <div class="about-card">
             <span class="close-modal" onclick="closeAbout()">&times;</span>
             <h2 class="about-title">Xaqec</h2>
             <div class="about-divider"></div>
             <p class="about-text">
-                Tasarım disiplinini bir yaşam biçimi olarak benimseyen Xaqec, yaratıcılığı akademik birikimle harmanlayan bir üniversite öğrencisidir. 
-                Sadece dijital arayüzlerle sınırlı kalmayan vizyonu; kağıt üzerindeki eskizlerden, enstrümanların ritmik dünyasına kadar uzanan çok katmanlı bir beslenme sürecinden güç alır. 
-                Farklı sanat disiplinlerini sentezleyerek, estetik ve fonksiyonu birleştiren zamansız işler üretmektedir.
+                Tasarım disiplinini bir yaşam biçimi olarak benimseyen Xaqec, yaratıcılığı akademik birikimle
+                harmanlayan bir üniversite öğrencisidir.
+                Sadece dijital arayüzlerle sınırlı kalmayan vizyonu; kağıt üzerindeki eskizlerden, enstrümanların ritmik
+                dünyasına kadar uzanan çok katmanlı bir beslenme sürecinden güç alır.
+                Farklı sanat disiplinlerini sentezleyerek, estetik ve fonksiyonu birleştiren zamansız işler
+                üretmektedir.
             </p>
         </div>
     </div>
 
+    <!-- Welcome Screen -->
     <div id="screen-welcome" class="screen active">
         <div class="welcome-panel">
-            
+
             <div class="bottle-wrapper">
                 <div class="bottle">
                     <div class="b-cap"></div>
@@ -45,8 +54,8 @@
             </div>
 
             <h1 class="main-title">L'Énigme</h1>
-            <p class="subtitle">Gizemli bir hikaye. 20 Sahne. Senin kokun hangisi?</p>
-            
+            <p class="subtitle">Gizemli bir hikaye. Bir koku yolculuğu. Senin imzan hangisi?</p>
+
             <div class="btn-group">
                 <button class="btn-start" onclick="GAME.start('female')">KADIN</button>
                 <button class="btn-start" onclick="GAME.start('male')">ERKEK</button>
@@ -54,6 +63,7 @@
         </div>
     </div>
 
+    <!-- Game Screen -->
     <div id="screen-game" class="screen">
         <div class="story-container">
             <div class="progress-container">
@@ -61,26 +71,47 @@
             </div>
             <div class="story-text" id="q-text">Hikaye yükleniyor...</div>
             <div id="opts-container">
-                </div>
+                <!-- Options will be injected here -->
+            </div>
         </div>
     </div>
 
+    <!-- Analysis Screen -->
+    <div id="screen-analysis" class="screen">
+        <div class="analysis-panel">
+            <h2 class="analysis-text">YAPAY ZEKA ANALİZİ</h2>
+            <div class="analysis-bar">
+                <div class="analysis-progress"></div>
+            </div>
+            <p style="color:#666; margin-top:10px; font-size:12px; letter-spacing:2px;">RUHUNUZUN KODLARI ÇÖZÜLÜYOR...
+            </p>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
     <div id="screen-result" class="screen">
         <div class="result-card">
             <div class="res-img-wrapper">
-                <img id="res-img" src="" class="res-img" alt="Parfüm Resmi">
+                <img id="res-img" src="" class="res-img" alt="Parfüm Resmi"
+                    onerror="this.src='https://placehold.co/375x500/101010/D4AF37?text=NO+IMAGE';">
             </div>
             <div class="res-info">
                 <span id="res-brand" class="res-brand">MARKA</span>
                 <h1 id="res-name" class="res-name">Parfüm Adı</h1>
                 <p id="res-desc" class="res-desc">Parfüm açıklaması burada yer alacak.</p>
-                
+
                 <div class="notes-grid">
-                    <div class="note"><span>ÜST NOTA</span><div id="res-top">-</div></div>
-                    <div class="note"><span>ORTA NOTA</span><div id="res-heart">-</div></div>
-                    <div class="note"><span>DİP NOTA</span><div id="res-base">-</div></div>
+                    <div class="note"><span>ÜST NOTA</span>
+                        <div id="res-top">-</div>
+                    </div>
+                    <div class="note"><span>ORTA NOTA</span>
+                        <div id="res-heart">-</div>
+                    </div>
+                    <div class="note"><span>DİP NOTA</span>
+                        <div id="res-base">-</div>
+                    </div>
                 </div>
-                
+
                 <button class="btn-start" style="margin-top:30px;" onclick="location.reload()">BAŞA DÖN</button>
             </div>
         </div>
@@ -89,4 +120,5 @@
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
