@@ -1,52 +1,78 @@
-// --- 1. OYUN HİKAYESİ VE SORULAR (EKSİKSİZ) ---
+/* data.js */
+
+// --- 1. OYUN HİKAYESİ VE SORULAR (20 ADIM - BAĞIMLI HİKAYE) ---
+/*
+  Her adım bir öncekiyle bağlantılıdır.
+  bg: 'f_1' -> Female Scene 1
+  bg: 'm_1' -> Male Scene 1
+*/
 const STORY_DATA = {
     female: [
-        { text: "Gözlerini açtığında kendini sisli bir ormanın kıyısında buluyorsun. Hava alacakaranlık. İlk hissin ne?", bg: "forest", opts: [{ t: "Huzur ve merak.", c: "gizemli" }, { t: "Üşüdüm, sığınacak yer lazım.", c: "gurme" }, { t: "Derin bir nefes alırım.", c: "temiz" }, { t: "Macera başlıyor!", c: "enerjik" }] },
-        { text: "Ormanın içinde ilerlerken karşına terk edilmiş gibi duran devasa bir malikane çıkıyor. Kapısı nasıl?", bg: "mansion", opts: [{ t: "Ağır, oymalı ahşap.", c: "sik" }, { t: "Beyaz, zarif ve altın detaylı.", c: "romantik" }, { t: "Camdan, içi görünüyor.", c: "temiz" }, { t: "Dikenli güllerle sarılı.", c: "gizemli" }] },
-        { text: "İçeri giriyorsun. Büyük salonda bir balo varmış ama kimse yok. Havada asılı kalan müzik sence hangisi?", bg: "hall", opts: [{ t: "Hüzünlü bir piyano.", c: "romantik" }, { t: "Derin bir çello.", c: "gizemli" }, { t: "Canlı caz orkestrası.", c: "enerjik" }, { t: "Klasik bir vals.", c: "sik" }] },
-        { text: "Masada dört farklı içecek kadehi duruyor. Susuzluğunu gidermek için birini seçmek zorundasın.", bg: "table", opts: [{ t: "Sıcak çikolata.", c: "gurme" }, { t: "Buzlu kristal su.", c: "temiz" }, { t: "Yıllanmış şarap.", c: "sik" }, { t: "Egzotik kokteyl.", c: "enerjik" }] },
-        { text: "Merdivenlerden yukarı çıkarken duvarda bir tablo görüyorsun. Tabloda ne var?", bg: "stairs", opts: [{ t: "Fırtınalı bir deniz.", c: "enerjik" }, { t: "Soyut şekiller.", c: "sik" }, { t: "Çiçekli bahçe.", c: "romantik" }, { t: "Karanlık orman.", c: "gizemli" }] },
-        { text: "Bir yatak odasına girdin. Aynanın önünde duran mücevher kutusunu açtın. İçinden ne çıktı?", bg: "room", opts: [{ t: "Pırlanta kolye.", c: "sik" }, { t: "Gümüş madalyon.", c: "gizemli" }, { t: "Renkli bileklik.", c: "enerjik" }, { t: "Pembe kuvars.", c: "romantik" }] },
-        { text: "Pencereyi açtın. Dışarıdan gelen rüzgar sana ne fısıldıyor?", bg: "window", opts: [{ t: "Sırları.", c: "gizemli" }, { t: "Başarıyı.", c: "sik" }, { t: "Özgürlüğü.", c: "enerjik" }, { t: "Aşkı.", c: "romantik" }] },
-        { text: "Odada bir gardırop var. Kapağını açtığında en çok dikkatini çeken kumaş hangisi?", bg: "closet", opts: [{ t: "Yumuşacık kaşmir.", c: "gurme" }, { t: "Serin saten.", c: "sik" }, { t: "Doğal keten.", c: "temiz" }, { t: "Siyah dantel.", c: "gizemli" }] },
-        { text: "Malikanenin bahçesine çıkıyorsun. Hangi çiçeği koparıp koklamak istersin?", bg: "garden", opts: [{ t: "Kadifemsi kırmızı bir gül.", c: "romantik" }, { t: "Beyaz narin bir yasemin.", c: "temiz" }, { t: "Vahşi bir orkide.", c: "gizemli" }, { t: "Tatlı kokulu hanımeli.", c: "gurme" }] },
-        { text: "Bahçede bir labirent var. Yolunu nasıl bulursun?", bg: "maze", opts: [{ t: "İçgüdülerimle.", c: "gizemli" }, { t: "Mantığımla.", c: "sik" }, { t: "Koşarak.", c: "enerjik" }, { t: "Yıldızlara bakarak.", c: "romantik" }] },
-        { text: "Akşam oldu. Gökyüzü nasıl görünüyor?", bg: "sky", opts: [{ t: "Zifiri karanlık.", c: "gizemli" }, { t: "Yıldızlarla dolu.", c: "romantik" }, { t: "Şehir ışıkları.", c: "sik" }, { t: "Mor bulutlar.", c: "enerjik" }] },
-        { text: "Aniden bir yağmur başlıyor. Bu yağmur sana ne hissettirdi?", bg: "rain", opts: [{ t: "Arınma.", c: "temiz" }, { t: "Melankoli.", c: "romantik" }, { t: "Enerji.", c: "enerjik" }, { t: "Sıcaklık ihtiyacı.", c: "gurme" }] },
-        { text: "Sığınmak için bir kütüphaneye girdin. Hangi kitabı eline alırsın?", bg: "library", opts: [{ t: "Büyü kitabı.", c: "gizemli" }, { t: "Moda dergisi.", c: "sik" }, { t: "Aşk romanı.", c: "romantik" }, { t: "Yemek tarifi.", c: "gurme" }] },
-        { text: "Kütüphanede bir şömine yanıyor. Ateşe ne atarsın?", bg: "fire", opts: [{ t: "Kuru odun.", c: "temiz" }, { t: "Portakal kabuğu.", c: "enerjik" }, { t: "Eski mektup.", c: "gizemli" }, { t: "Tarçın çubuğu.", c: "gurme" }] },
-        { text: "Şömine başında uyuyakaldın. Rüyanda ne gördün?", bg: "dream", opts: [{ t: "Uçuyordum.", c: "temiz" }, { t: "Alkışlanıyordum.", c: "sik" }, { t: "Şekerden ev.", c: "gurme" }, { t: "Bilinmezlik.", c: "gizemli" }] },
-        { text: "Sabah oldu. Kahvaltıda ne istersin?", bg: "breakfast", opts: [{ t: "Portakal suyu.", c: "enerjik" }, { t: "Kruvasan.", c: "sik" }, { t: "Pankek.", c: "gurme" }, { t: "Bitki çayı.", c: "temiz" }] },
-        { text: "Malikaneden ayrılma vakti. Yanına hatıra olarak ne alırsın?", bg: "leaving", opts: [{ t: "Taş.", c: "temiz" }, { t: "Tüy kalem.", c: "sik" }, { t: "Baharat.", c: "gurme" }, { t: "Anı yeter.", c: "romantik" }] },
-        { text: "Dönüş yolunda nasıl bir müzik dinlersin?", bg: "car", opts: [{ t: "Pop.", c: "enerjik" }, { t: "Lo-fi.", c: "temiz" }, { t: "Klasik.", c: "sik" }, { t: "Film müziği.", c: "gizemli" }] },
-        { text: "Eve vardın. İlk yaptığın şey ne?", bg: "home", opts: [{ t: "Duş.", c: "temiz" }, { t: "Arama yapmak.", c: "romantik" }, { t: "Yemek.", c: "gurme" }, { t: "Çalışmak.", c: "sik" }] },
-        { text: "Son soru: Ruhunun rengi ne?", bg: "soul", opts: [{ t: "Altın.", c: "sik" }, { t: "Mor.", c: "gizemli" }, { t: "Mavi.", c: "temiz" }, { t: "Kırmızı.", c: "romantik" }] }
+        // BÖLÜM 1: GİRİŞ (The Awakening)
+        { text: "1/20. Gözlerini araladığında, kendini hiç bilmediğin, gümüşi bir sisle kaplı antik bir korunun kıyısında buluyorsun. Ay ışığı sisin içinden süzülüyor. İlk hissettiğin şey ne?", bg: "f_1", opts: [{ t: "Derin bir huzur.", c: "temiz" }, { t: "Kalbimde bir çarpıntı.", c: "romantik" }, { t: "Bilinmeze duyulan merak.", c: "gizemli" }, { t: "Buradan çıkma arzusu.", c: "enerjik" }] },
+        { text: "2/20. Korunun derinliklerinden gelen melodi seni çağırıyor. Yürümeye başlıyorsun. Yoluna çıkan ilk engel ne?", bg: "f_2", opts: [{ t: "Dikenli, koyu sarmaşıklar.", c: "gizemli" }, { t: "Gürül gürül akan bir dere.", c: "enerjik" }, { t: "Yolu kapatan devasa bir kaya.", c: "sik" }, { t: "Aniden bastıran yoğun sis.", c: "temiz" }] },
+        { text: "3/20. Engeli aştın ve karşına terk edilmiş gibi duran, ama pencerelerinden ılık bir ışık sızan o Malikaneyi gördün. Kapısı sana neyi anımsatıyor?", bg: "f_3", opts: [{ t: "Çocukluğumun masallarını.", c: "romantik" }, { t: "Eski bir krallığın girişini.", c: "sik" }, { t: "Unutulmuş bir tapınağı.", c: "gizemli" }, { t: "Sıcak bir yuvayı.", c: "gurme" }] },
+        { text: "4/20. Büyük kapı gıcırdayarak açıldı. Holde kimse yok ama havada çok tanıdık bir koku var. Bu koku ne olabilir?", bg: "f_4", opts: [{ t: "Taze kesilmiş güller.", c: "romantik" }, { t: "Eski kitaplar ve ahşap.", c: "sik" }, { t: "Okyanus esintisi.", c: "temiz" }, { t: "Kavrulmuş şeker ve vanilya.", c: "gurme" }] },
+
+        // BÖLÜM 2: KEŞİF (The Exploration)
+        { text: "5/20. Salonun ortasında kristal bir masa var. Üzerinde dört farklı anahtar duruyor. Hangisini alırsın?", bg: "f_5", opts: [{ t: "Paslı, demir anahtar.", c: "gizemli" }, { t: "Parlak altın anahtar.", c: "sik" }, { t: "Camdan, şeffaf anahtar.", c: "temiz" }, { t: "Çiçeklerle süslü anahtar.", c: "romantik" }] },
+        { text: "6/20. Seçtiğin anahtar seni üst kattaki bir odaya yönlendirdi. Odaya girdiğinde ilk dikkatini çeken obje ne?", bg: "f_6", opts: [{ t: "Devasa, antika bir ayna.", c: "sik" }, { t: "Pencere önündeki teleskop.", c: "gizemli" }, { t: "Yerdeki renkli halı.", c: "enerjik" }, { t: "Kadife bir koltuk.", c: "gurme" }] },
+        { text: "7/20. Aynaya yaklaştın ama yansıman farklı. Kendini nasıl görüyorsun?", bg: "f_7", opts: [{ t: "Bir kraliçe gibi güçlü.", c: "sik" }, { t: "Bir peri gibi ışıldayan.", c: "temiz" }, { t: "Gözleri parlayan bir savaşçı.", c: "enerjik" }, { t: "Gizemli bir gölge.", c: "gizemli" }] },
+        { text: "8/20. Aniden pencere açıldı ve içeri bir kuş süzüldü. Bu kuşun rengi ne?", bg: "f_8", opts: [{ t: "Zümrüt yeşili.", c: "enerjik" }, { t: "Gece karası.", c: "gizemli" }, { t: "İnci beyazı.", c: "temiz" }, { t: "Alev kırmızısı.", c: "romantik" }] },
+
+        // BÖLÜM 3: GİZEM (The Mystery)
+        { text: "9/20. Kuş, gagasıyla gardırobun kapağını işaret etti. Gardırobu açtığında içerisi kıyafet değil, başka bir dünyaya açılan bir geçit! Geçitten ne görünüyor?", bg: "f_9", opts: [{ t: "Yıldızlarla dolu uzay.", c: "gizemli" }, { t: "Güneşli bir sahil.", c: "enerjik" }, { t: "Çiçek bahçeleri.", c: "romantik" }, { t: "Lüks bir balo salonu.", c: "sik" }] },
+        { text: "10/20. Geçitten geçmeye cesaret ettin. Ayakların yere bastığında zemin neyden yapılmış?", bg: "f_10", opts: [{ t: "Yumuşacık bulutlardan.", c: "temiz" }, { t: "Soğuk mermerden.", c: "sik" }, { t: "Ilık kumlardan.", c: "enerjik" }, { t: "Kuru yapraklardan.", c: "gizemli" }] },
+        { text: "11/20. Karşında bir kadın belirdi. Sana 'Aradığın şey burada değil, kalbinde' dedi. Sesi nasıldı?", bg: "f_11", opts: [{ t: "Fısıltı gibi, yumuşak.", c: "temiz" }, { t: "Güçlü ve otoriter.", c: "sik" }, { t: "Şarkı söyler gibi.", c: "romantik" }, { t: "Boğuk ve derinden.", c: "gizemli" }] },
+        { text: "12/20. Kadın sana bir iksir uzattı. İksirin rengi ne?", bg: "f_12", opts: [{ t: "Altın sarısı.", c: "sik" }, { t: "Menekşe moru.", c: "gizemli" }, { t: "Okyanus mavisi.", c: "enerjik" }, { t: "Tatlı pembe.", c: "gurme" }] },
+
+        // BÖLÜM 4: DÖNÜŞÜM (The Transformation)
+        { text: "13/20. İksiri içtin. Vücudunda bir enerji dalgası yayıldı. Hangi elementi kontrol edebildiğini hissediyorsun?", bg: "f_13", opts: [{ t: "Ateş.", c: "romantik" }, { t: "Su.", c: "temiz" }, { t: "Toprak.", c: "sik" }, { t: "Hava.", c: "enerjik" }] },
+        { text: "14/20. Artık o dünyadan ayrılma vakti. Geri dönerken yanına bir hatıra almak istiyorsun. Ne alırsın?", bg: "f_14", opts: [{ t: "Parlayan bir taş.", c: "gizemli" }, { t: "Egzotik bir meyve.", c: "gurme" }, { t: "Bir avuç kum.", c: "temiz" }, { t: "Kurutulmuş bir çiçek.", c: "romantik" }] },
+        { text: "15/20. Tekrar malikanedesin. Ama artık malikane değişti. Duvarlar ne renk?", bg: "f_15", opts: [{ t: "Beyaz ve ferah.", c: "temiz" }, { t: "Siyah ve asil.", c: "sik" }, { t: "Kırmızı ve sıcak.", c: "romantik" }, { t: "Altın varaklı.", c: "gurme" }] },
+        { text: "16/20. Dışarıda yağmur başladı ama bu normal bir yağmur değil. Damlalar neye benziyor?", bg: "f_16", opts: [{ t: "Elmasa.", c: "sik" }, { t: "Gözyaşlarına.", c: "romantik" }, { t: "Işık huzmelerine.", c: "enerjik" }, { t: "Gümüş ipliklere.", c: "gizemli" }] },
+
+        // BÖLÜM 5: SONUÇ (The Resolution)
+        { text: "17/20. Yağmurun altında dans etmek istiyorsun. Hangi müzik çalıyor?", bg: "f_17", opts: [{ t: "Klasik bir senfoni.", c: "sik" }, { t: "Modern bir pop şarkısı.", c: "enerjik" }, { t: "Hüzünlü bir jazz.", c: "romantik" }, { t: "Doğa sesleri.", c: "temiz" }] },
+        { text: "18/20. Ve orman seni serbest bırakıyor. Şehre dönüyorsun. İlk yapacağın şey ne?", bg: "f_18", opts: [{ t: "Sıcak bir kahve içmek.", c: "gurme" }, { t: "Arkadaşlarımla buluşmak.", c: "enerjik" }, { t: "Uzun bir banyo yapmak.", c: "temiz" }, { t: "Yaşadıklarımı yazmak.", c: "gizemli" }] },
+        { text: "19/20. Aynaya son bir kez baktığında gözlerinde bir parıltı gördün. Bu parıltı sana neyi fısıldıyor?", bg: "f_19", opts: [{ t: "\"Sen özelsin.\"", c: "sik" }, { t: "\"Macera bitmedi.\"", c: "enerjik" }, { t: "\"Sevgi her şeydir.\"", c: "romantik" }, { t: "\"Sırlarını koru.\"", c: "gizemli" }] },
+        { text: "20/20. Yolculuğun sonuna geldin. Ruhunun özünü tek bir kelimeyle tanımla.", bg: "f_20", opts: [{ t: "Tutku.", c: "romantik" }, { t: "Zarafet.", c: "sik" }, { t: "Özgürlük.", c: "temiz" }, { t: "Gizem.", c: "gizemli" }] }
     ],
+
     male: [
-        { text: "Gece yarısı şifreli bir telefon aldın. Operasyon başlıyor. İlk durağın neresi?", bg: "forest", opts: [{ t: "Londra'nın sisli arka sokakları.", c: "sik" }, { t: "Amazon ormanlarının derinlikleri.", c: "maskulen" }, { t: "Miami'de neon ışıklı bir gece kulübü.", c: "enerjik" }, { t: "İstanbul'un tarihi yeraltı sarnıçları.", c: "gizemli" }] },
-        { text: "Görev yerine gitmek için garajına indin. Hangi aracı seçiyorsun?", bg: "mansion", opts: [{ t: "Mat siyah, zırhlı bir SUV.", c: "maskulen" }, { t: "Klasik, gümüş renkli bir Aston Martin.", c: "centilmen" }, { t: "Kırmızı, üstü açık bir spor araba.", c: "enerjik" }, { t: "Siyah camlı, şoförlü bir limuzin.", c: "sik" }] },
-        { text: "İçeri sızmak için kılık değiştirmen gerekiyor. Rolün ne?", bg: "hall", opts: [{ t: "Zengin bir yatırımcı CEO.", c: "sik" }, { t: "Gizemli bir sanat koleksiyoneri.", c: "gizemli" }, { t: "Karizmatik bir diplomat.", c: "centilmen" }, { t: "Tehlikeli bir koruma.", c: "maskulen" }] },
-        { text: "Hedefin bulunduğu bara oturdun. Barmene ne sipariş edersin?", bg: "table", opts: [{ t: "Sert bir viski, buzsuz.", c: "maskulen" }, { t: "İçinde ne olduğunu kimsenin bilmediği özel bir karışım.", c: "gizemli" }, { t: "Buz gibi, tazeleyici bir Gin Tonic.", c: "enerjik" }, { t: "Yıllanmış bir konyak.", c: "centilmen" }] },
-        { text: "Yan masada oturan kişinin dikkatini çekmek istiyorsun. Hangi aksesuarını kullanırsın?", bg: "stairs", opts: [{ t: "Pahalı, İsviçre yapımı saatim.", c: "sik" }, { t: "Eskitilmiş deri bilekliğim.", c: "maskulen" }, { t: "Siyah güneş gözlüklerim.", c: "gizemli" }, { t: "Kol düğmelerim.", c: "centilmen" }] },
-        { text: "Müzik değişti. Ortama hakim olan ritim ne?", bg: "room", opts: [{ t: "Ağır ve sert bir Rock parçası.", c: "maskulen" }, { t: "Sofistike bir Caz.", c: "sik" }, { t: "Hipnotize edici Deep House.", c: "gizemli" }, { t: "Zarif bir Klasik müzik.", c: "centilmen" }] },
-        { text: "Bir anda elektrikler kesildi. İlk tepkin ne?", bg: "window", opts: [{ t: "Hemen savunma pozisyonuna geçerim.", c: "maskulen" }, { t: "Sakinliğimi korur, etrafı izlerim.", c: "centilmen" }, { t: "Fırsattan istifade kalabalığa karışırım.", c: "enerjik" }, { t: "Gölgeye çekilir, görünmez olurum.", c: "gizemli" }] },
-        { text: "Havada bir koku var. Bu koku sana neyi hatırlatıyor?", bg: "closet", opts: [{ t: "Deri koltuklar ve puro dumanı.", c: "maskulen" }, { t: "Okyanusun tuzlu meltemi.", c: "enerjik" }, { t: "Eski bir tapınaktaki tütsüler.", c: "gizemli" }, { t: "Taze ütülenmiş gömlek ve sabun.", c: "sik" }] },
-        { text: "Görev tamamlandı. Olay yerinden nasıl ayrılıyorsun?", bg: "garden", opts: [{ t: "Kimse fark etmeden, sessizce.", c: "sik" }, { t: "Büyük bir patlama ve kaos yaratarak.", c: "enerjik" }, { t: "Arkamda sadece bir duman bulutu bırakarak.", c: "gizemli" }, { t: "Ana kapıdan, kendimden emin adımlarla.", c: "centilmen" }] },
-        { text: "Eve döndün. Rahatlamak için hangi hobine vakit ayırırsın?", bg: "maze", opts: [{ t: "Garajda arabamı tamir ederim.", c: "maskulen" }, { t: "Borsa ve iş haberlerini takip ederim.", c: "sik" }, { t: "Spor salonuna giderim.", c: "enerjik" }, { t: "Karanlık odada fotoğraf banyo ederim.", c: "gizemli" }] },
-        { text: "Bir sonraki tatilin için nereyi seçersin?", bg: "sky", opts: [{ t: "Issız bir dağda kamp.", c: "maskulen" }, { t: "Dubai'de 7 yıldızlı bir otel.", c: "sik" }, { t: "Avustralya'da sörf.", c: "enerjik" }, { t: "Mısır piramitlerinde tarih turu.", c: "gizemli" }] },
-        { text: "Gardırobunun vazgeçilmez parçası nedir?", bg: "rain", opts: [{ t: "Eskitilmiş deri ceket.", c: "maskulen" }, { t: "Takım elbise.", c: "sik" }, { t: "Rahat beyaz T-shirt.", c: "enerjik" }, { t: "Kaşmir palto.", c: "centilmen" }] },
-        { text: "En sevdiğin element hangisi?", bg: "library", opts: [{ t: "Ateş (Yakıcı ve Güçlü).", c: "maskulen" }, { t: "Metal (Parlak ve Keskin).", c: "sik" }, { t: "Hava (Hızlı ve Özgür).", c: "enerjik" }, { t: "Su (Derin ve Sessiz).", c: "gizemli" }] },
-        { text: "Sana en çok ilham veren saat dilimi?", bg: "fire", opts: [{ t: "Güneşin doğuşu.", c: "enerjik" }, { t: "Öğle vakti.", c: "sik" }, { t: "Gün batımı.", c: "centilmen" }, { t: "Gece yarısı.", c: "gizemli" }] },
-        { text: "Bir tartışmada tavrın ne olur?", bg: "dream", opts: [{ t: "Baskın çıkarım.", c: "maskulen" }, { t: "Diplomatik konuşurum.", c: "centilmen" }, { t: "Mantıkla ikna ederim.", c: "sik" }, { t: "Analiz ederim.", c: "gizemli" }] },
-        { text: "Hayatındaki en büyük motivasyon?", bg: "breakfast", opts: [{ t: "Güç.", c: "maskulen" }, { t: "Başarı.", c: "sik" }, { t: "Adrenalin.", c: "enerjik" }, { t: "Bilgi.", c: "gizemli" }] },
-        { text: "İdeal evcil hayvanın?", bg: "leaving", opts: [{ t: "Doberman.", c: "maskulen" }, { t: "Safkan At.", c: "centilmen" }, { t: "Kaplan.", c: "sik" }, { t: "Baykuş.", c: "gizemli" }] },
-        { text: "Favori rengin?", bg: "car", opts: [{ t: "Mat Siyah.", c: "maskulen" }, { t: "Lacivert.", c: "sik" }, { t: "Turuncu.", c: "enerjik" }, { t: "Koyu Gri.", c: "gizemli" }] },
-        { text: "İdeal evin nasıl olmalı?", bg: "home", opts: [{ t: "Kütük ev.", c: "maskulen" }, { t: "Penthouse.", c: "sik" }, { t: "Modern villa.", c: "enerjik" }, { t: "Tarihi konak.", c: "gizemli" }] },
-        { text: "Son: Nasıl hatırlanmak istersin?", bg: "soul", opts: [{ t: "Korkusuz.", c: "maskulen" }, { t: "Zengin.", c: "sik" }, { t: "Eğlenceli.", c: "enerjik" }, { t: "Bilge.", c: "gizemli" }] }
+        // BÖLÜM 1: GÖREV (The Mission)
+        { text: "1/20. Telefonun ekranı, zifiri karanlık odada mavi bir ışıkla parlıyor. Gece yarısı gelen çağrı. Görev başlıyor. Neredesin?", bg: "m_1", opts: [{ t: "Tokyo'nun neon ışıklı bir çatısında.", c: "enerjik" }, { t: "Londra'da, yağmurlu bir sokakta.", c: "sik" }, { t: "Sahra çölünde, bir kampta.", c: "maskulen" }, { t: "Eski bir kütüphanenin mahzeninde.", c: "gizemli" }] },
+        { text: "2/20. Hedefe gitmek için hazırlanman gerek. Dolabını açtın. İlk eline gelen parça ne?", bg: "m_2", opts: [{ t: "Siyah deri ceket.", c: "maskulen" }, { t: "Jilet gibi bir takım elbise.", c: "sik" }, { t: "Rahat bir keten gömlek.", c: "centilmen" }, { t: "Koyu renkli bir kapüşonlu.", c: "gizemli" }] },
+        { text: "3/20. Garajdasın. Motorun sesi kükrüyor. Altındaki araç ne?", bg: "m_3", opts: [{ t: "Modifiye edilmiş bir Japon canavarı.", c: "enerjik" }, { t: "Klasik bir İngiliz leydisi.", c: "centilmen" }, { t: "Simsiyah bir Amerikan kası.", c: "maskulen" }, { t: "Zırhlı, teknolojik bir SUV.", c: "sik" }] },
+        { text: "4/20. Buluşma noktası lüks bir otelin lobisi. İçeri girdin. İnsanlar sana nasıl bakıyor?", bg: "m_4", opts: [{ t: "Hayranlıkla.", c: "sik" }, { t: "Korkuyla.", c: "maskulen" }, { t: "Merakla.", c: "gizemli" }, { t: "Saygıyla.", c: "centilmen" }] },
+
+        // BÖLÜM 2: OYUN (The Game)
+        { text: "5/20. Barda hedefi bekliyorsun. Barmen \"Ne alırsınız?\" diye sordu. Cevabın?", bg: "m_5", opts: [{ t: "Sek bir viski.", c: "maskulen" }, { t: "Martini, çalkalanmış.", c: "sik" }, { t: "Sadece soda.", c: "enerjik" }, { t: "Özel bir kokteyl.", c: "centilmen" }] },
+        { text: "6/20. Hedef geldi. Bir kadın. Yanına oturdu ve parfümleri hakkında bir yorum yaptı. Ne dedi?", bg: "m_6", opts: [{ t: "\"Tehlikeli kokuyorsun.\"", c: "maskulen" }, { t: "\"Çok zarif bir seçim.\"", c: "sik" }, { t: "\"Bu koku bana denizleri hatırlattı.\"", c: "enerjik" }, { t: "\"Sırlarla dolusun.\"", c: "gizemli" }] },
+        { text: "7/20. Bir kart oyunu başlıyor. Masaya ne koyuyorsun?", bg: "m_7", opts: [{ t: "Tüm servetimi.", c: "sik" }, { t: "Sillahımı.", c: "maskulen" }, { t: "Sadece şansımı.", c: "enerjik" }, { t: "Zekamı.", c: "centilmen" }] },
+        { text: "8/20. Oyun kızıştı. Rakibin blöf yapıyor. Tepkin ne?", bg: "m_8", opts: [{ t: "Gözlerinin içine dik dik bakarım.", c: "maskulen" }, { t: "Hafifçe gülümserim.", c: "sik" }, { t: "Umursamazca omuz silkerim.", c: "enerjik" }, { t: "Analiz etmeye devam ederim.", c: "gizemli" }] },
+
+        // BÖLÜM 3: KAOS (The Chaos)
+        { text: "9/20. Işıklar aniden kesildi. Kaos başladı. İlk hamlen ne?", bg: "m_9", opts: [{ t: "Siper alırım.", c: "maskulen" }, { t: "Kadını korurum.", c: "centilmen" }, { t: "Kalabalığa karışıp kaçarım.", c: "enerjik" }, { t: "Karanlıkta avlanırım.", c: "gizemli" }] },
+        { text: "10/20. Dışarı çıktın. Yağmur yağıyor. Sokaklar ıslak ve neon ışıklarıyla parlıyor. Nereye gidiyorsun?", bg: "m_10", opts: [{ t: "Yeraltı kulübüne.", c: "enerjik" }, { t: "Güvenli eve.", c: "gizemli" }, { t: "Limana, tekneye.", c: "maskulen" }, { t: "Özel jet pistine.", c: "sik" }] },
+        { text: "11/20. Takip ediliyorsun. İzini kaybettirmek için nereye girersin?", bg: "m_11", opts: [{ t: "Kalabalık bir metro istasyonuna.", c: "enerjik" }, { t: "Eski bir müzeye.", c: "centilmen" }, { t: "Karanlık bir ara sokağa.", c: "maskulen" }, { t: "Lüks bir mağazaya.", c: "sik" }] },
+        { text: "12/20. İzini kaybettirdin. Nefeslenmek için durdun. Cebinden ne çıkardın?", bg: "m_12", opts: [{ t: "Eski bir köstekli saat.", c: "centilmen" }, { t: "Metal bir çakmak.", c: "maskulen" }, { t: "Son teknoloji bir cihaz.", c: "sik" }, { t: "Bir fotoğraf.", c: "gizemli" }] },
+
+        // BÖLÜM 4: ZİRVE (The Climax)
+        { text: "13/20. Şehrin en yüksek binasının tepesindesin. Rüzgar yüzüne vuruyor. Aşağıdaki şehre bakınca ne hissediyorsun?", bg: "m_13", opts: [{ t: "Burası benim krallığım.", c: "sik" }, { t: "Her şey çok küçük.", c: "gizemli" }, { t: "Özgürlük.", c: "enerjik" }, { t: "Yalnızlık.", c: "maskulen" }] },
+        { text: "14/20. Gökyüzünde şimşekler çakıyor. Doğanın gücü sana neyi hatırlatıyor?", bg: "m_14", opts: [{ t: "Kendi içimdeki öfkeyi.", c: "maskulen" }, { t: "Evrenin dengesini.", c: "centilmen" }, { t: "Değişimin kaçınılmazlığını.", c: "enerjik" }, { t: "Kontrolün illüzyon olduğunu.", c: "gizemli" }] },
+        { text: "15/20. Sabahın ilk ışıkları ufukta beliriyor. Yeni bir gün. Planın ne?", bg: "m_15", opts: [{ t: "Dünyayı değiştirmek.", c: "sik" }, { t: "Sadece hayatta kalmak.", c: "maskulen" }, { t: "Yeni yerler keşfetmek.", c: "enerjik" }, { t: "Bilgeliğimi artırmak.", c: "centilmen" }] },
+        { text: "16/20. Telefonun tekrar çaldı. Açtın mı?", bg: "m_16", opts: [{ t: "Evet, her zaman hazırım.", c: "enerjik" }, { t: "Hayır, artık kendi yolumdayım.", c: "maskulen" }, { t: "Kim olduğuna bağlı.", c: "sik" }, { t: "Sessize aldım.", c: "gizemli" }] },
+
+        // BÖLÜM 5: FİNAL (The Legacy)
+        { text: "17/20. Aynaya baktığında kimi görüyorsun?", bg: "m_17", opts: [{ t: "Bir lideri.", c: "sik" }, { t: "Bir savaşçıyı.", c: "maskulen" }, { t: "Bir gezgini.", c: "enerjik" }, { t: "Bir beyefendiyi.", c: "centilmen" }] },
+        { text: "18/20. Hayattaki en büyük lüksün nedir?", bg: "m_18", opts: [{ t: "Zaman.", c: "sik" }, { t: "Sessizlik.", c: "maskulen" }, { t: "Sağlık.", c: "enerjik" }, { t: "Dostluk.", c: "centilmen" }] },
+        { text: "19/20. İnsanlar seni yıllar sonra nasıl hatırlasın?", bg: "m_19", opts: [{ t: "Efsanevi bir ikon olarak.", c: "sik" }, { t: "Korkusuz biri olarak.", c: "maskulen" }, { t: "Asil biri olarak.", c: "centilmen" }, { t: "Hiç çözülememiş bir sır olarak.", c: "gizemli" }] },
+        { text: "20/20. Son karar. Bu hikayenin kahramanı sensin. İmzan ne olacak?", bg: "m_20", opts: [{ t: "Güç.", c: "maskulen" }, { t: "Zeka.", c: "sik" }, { t: "Tutku.", c: "enerjik" }, { t: "Karakter.", c: "centilmen" }] }
     ]
 };
 
-// --- 2. GELİŞMİŞ DEVASA VERİTABANI ---
+// --- 2. GELİŞMİŞ DEVASA VERİTABANI (AYNI KALDI) ---
 const PERFUME_DB = {
     female: [
         { cat: 'romantik', brand: 'GUCCI', name: 'Bloom', img: 'https://fimgs.net/mdimg/perfume/375x500.44894.jpg', desc: 'Ruhunuzu çiçek bahçesine götüren, son derece feminen bir imza.', top: 'Rangoon Sarmaşığı', heart: 'Yasemin Tomurcuğu', base: 'Sümbülteber' },
@@ -171,4 +197,4 @@ const PERFUME_DB = {
         { cat: 'centilmen', brand: 'FREDERIC MALLE', name: 'Musc Ravageur', img: 'https://fimgs.net/mdimg/perfume/375x500.2831.jpg', desc: 'Sofistike, sıcak ve tensel bir başyapıt.', top: 'Lavanta', heart: 'Tarçın', base: 'Vanilya, Misk' },
         { cat: 'centilmen', brand: 'MAISON MARGIELA', name: 'Jazz Club', img: 'https://fimgs.net/mdimg/perfume/375x500.20541.jpg', desc: 'Brooklyn caz kulübü. Puro, rom ve deri koltuklar.', top: 'Pembe Biber', heart: 'Rom', base: 'Tütün Yaprağı' }
     ]
-}; 
+};
