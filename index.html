@@ -1,33 +1,41 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'Énigme - The Scent RPG</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>L'Enigme - The Scent RPG</title>
+    <meta name="description" content="Gizemli bir hikaye. Bir koku yolculugu. Senin imzan hangisi?">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <nav>
-        <a href="#" onclick="location.reload()">Koku</a>
-        <a href="#" style="pointer-events: none;">Hikaye</a> <a href="#about" onclick="openAbout(event)">Sanatçı</a>
-    </nav>
 
     <div id="canvas-container">
         <canvas id="bg-canvas"></canvas>
     </div>
 
+    <nav>
+        <a href="#" onclick="location.reload(); return false;">Koku</a>
+        <a href="#" style="pointer-events:none; opacity:0.3;">Hikaye</a>
+        <a href="#about" onclick="openAbout(event)">Hakkinda</a>
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Tema Degistir">
+            <span class="theme-icon" id="themeIcon">&#9790;</span>
+        </button>
+    </nav>
+
     <!-- About Modal -->
     <div class="modal-overlay" id="aboutModal">
         <div class="about-card">
             <span class="close-modal" onclick="closeAbout()">&times;</span>
-            <h2 class="about-title">Xaqec</h2>
+            <h2 class="about-title">Aden</h2>
             <div class="about-divider"></div>
             <p class="about-text">
-                Tasarım disiplinini bir yaşam biçimi olarak benimseyen Xaqec, yaratıcılığı akademik birikimle harmanlayan bir üniversite öğrencisidir. 
-                Sadece dijital arayüzlerle sınırlı kalmayan vizyonu; kağıt üzerindeki eskizlerden, enstrümanların ritmik dünyasına kadar uzanan çok katmanlı bir beslenme sürecinden güç alır. 
-                Farklı sanat disiplinlerini sentezleyerek, estetik ve fonksiyonu birleştiren zamansız işler üretmektedir.
+                Sanat ve teknolojinin kesisim noktasinda duran Aden, muzigi ve gorsel sanatlari bir
+                ifade araci olarak kullanan bir universite ogrencisidir. Melodilerden ilham alan tasarim
+                anlayisi, dijital deneyimlere ruh katmayi hedefler. Her projede estetik ve duyguyu
+                on planda tutan Aden, yaraticiligini kodla birlesitirerek benzersiz dijital dunyalar insa eder.
             </p>
         </div>
     </div>
@@ -40,12 +48,11 @@
                     <div class="b-cap"></div>
                     <div class="b-body">
                         <div class="liquid"></div>
-                        <div class="shine"></div>
                     </div>
                 </div>
             </div>
-            <h1 class="main-title">L'Énigme</h1>
-            <p class="subtitle">Gizemli bir hikaye. Bir koku yolculuğu. Senin imzan hangisi?</p>
+            <h1 class="main-title">L'Enigme</h1>
+            <p class="subtitle">Gizemli bir hikaye. Bir koku yolculugu.<br>Senin imzan hangisi?</p>
             <div class="btn-group">
                 <button class="btn-start" onclick="GAME.start('female')">KADIN</button>
                 <button class="btn-start" onclick="GAME.start('male')">ERKEK</button>
@@ -55,11 +62,12 @@
 
     <!-- Game Screen -->
     <div id="screen-game" class="screen">
-        <div class="story-card">
+        <div class="story-card" id="storyCard">
             <div class="progress-bar-bg">
                 <div class="progress-bar-fill" id="progress-fill"></div>
             </div>
-            <div class="story-text" id="q-text">Hikaye yükleniyor...</div>
+            <div class="step-counter" id="stepCounter">1 / 20</div>
+            <div class="story-text" id="q-text">Hikaye yukleniyor...</div>
             <div class="opts-container" id="opts-container"></div>
         </div>
     </div>
@@ -67,11 +75,11 @@
     <!-- Analysis Screen -->
     <div id="screen-analysis" class="screen">
         <div class="analysis-panel">
-            <h2 class="analysis-text">YAPAY ZEKA ANALİZİ</h2>
+            <h2 class="analysis-text">YAPAY ZEKA ANALIZI</h2>
             <div class="analysis-bar">
                 <div class="analysis-progress"></div>
             </div>
-            <p style="color:#666; margin-top:10px; font-size:12px; letter-spacing:2px;">RUHUNUZUN KODLARI ÇÖZÜLÜYOR...</p>
+            <p class="analysis-sub">RUHUNUZUN KODLARI COZULUYOR...</p>
         </div>
     </div>
 
@@ -79,18 +87,18 @@
     <div id="screen-result" class="screen">
         <div class="result-card">
             <div class="res-img-wrapper">
-                <img id="res-img" src="" class="res-img" alt="Parfüm Resmi" onerror="this.src='https://placehold.co/375x500/101010/D4AF37?text=NO+IMAGE';">
+                <img id="res-img" src="" class="res-img" alt="Parfum" onerror="this.src='https://placehold.co/375x500/1a1a2e/D4AF37?text=NO+IMAGE';">
             </div>
             <div class="res-info">
                 <span id="res-brand" class="res-brand">MARKA</span>
-                <h1 id="res-name" class="res-name">Parfüm Adı</h1>
-                <p id="res-desc" class="res-desc">Parfüm açıklaması burada yer alacak.</p>
+                <h1 id="res-name" class="res-name">Parfum Adi</h1>
+                <p id="res-desc" class="res-desc">Aciklama.</p>
                 <div class="notes-grid">
-                    <div class="note"><span>ÜST NOTA</span><div id="res-top">-</div></div>
+                    <div class="note"><span>UST NOTA</span><div id="res-top">-</div></div>
                     <div class="note"><span>ORTA NOTA</span><div id="res-heart">-</div></div>
-                    <div class="note"><span>DİP NOTA</span><div id="res-base">-</div></div>
+                    <div class="note"><span>DIP NOTA</span><div id="res-base">-</div></div>
                 </div>
-                <button class="btn-start" style="margin-top:30px;" onclick="location.reload()">BAŞA DÖN</button>
+                <button class="btn-start" style="margin-top:24px;" onclick="location.reload()">BASA DON</button>
             </div>
         </div>
     </div>
